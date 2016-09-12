@@ -1,1 +1,95 @@
-f41
+<div class="page-content">
+    <div class="page-content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="toolbar" class="btn-group">
+                    <button type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                    <button id="remove" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </div>
+                <table id="table">
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            method: "get",
+            dataType: "json",
+            url: "41data.json",
+            columns: [{
+                    checkbox: true
+            },
+                {
+                    field: "username",
+                    title: "用户名",
+                    filter: {
+                        type: "select",
+                        data: ["121", "131", "151", "17", "119", "131", "511", "21", "611", "111"]
+                    }
+                }, {
+                    field: "password",
+                    title: "密码",
+                    filter: {
+                        type: "select",
+                        data: ["后期加"]
+                    }
+                },
+                {
+                    field: "name",
+                    title: "姓名",
+                    filter: {
+                        type: "select",
+                        data: ["后期加"]
+                    }
+                },
+                {
+                    field: "department",
+                    title: "部门",
+                    filter: {
+                        type: "select",
+                        data: ["后期加"]
+                    }
+                },
+                {
+                    field: "number",
+                    title: "电话",
+                    filter: {
+                        type: "select",
+                        data: ["后期加"]
+                    }
+                },
+                {
+                    field: "role",
+                    title: "角色",
+                    filter: {
+                        type: "select",
+                        data: ["后期加"]
+                    }
+                }],
+            filter: true,
+            search: true,
+            toolbar: "#toolbar",
+            pagination: true
+        };
+        $('#table').bootstrapTable(options);
+
+        var $table = $('#table'),
+            $button = $('#remove');
+        $button.click(function () {
+            var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                return row.num;
+            });
+            $table.bootstrapTable('remove', {
+                field: 'num',
+                values: ids
+            });
+        });
+    });
+</script>

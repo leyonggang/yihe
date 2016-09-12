@@ -26,7 +26,9 @@
     <link rel="stylesheet" href="css/ace.min.css">
     <link rel="stylesheet" href="css/ace-rtl.min.css">
     <link rel="stylesheet" href="css/ace-skins.min.css">
-	<link rel="stylesheet" href="css/bootstrap-table.css"></link>
+    <link rel="stylesheet" href="css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="css/select2.min.css">
+    <!--    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css">-->
     <!--[if lte IE 8]>
 		  <link rel="stylesheet" href="css/ace-ie.min.css">
 		<![endif]-->
@@ -43,6 +45,11 @@
 		<script src="js/html5shiv.js"></script>
 		<script src="js/respond.min.js"></script>
 		<![endif]-->
+    <style>
+        .pagination-detail {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -58,7 +65,7 @@
                 <a href="index.html" class="navbar-brand" style="padding:0">
                     <img src="images/logo1.jpg" alt="logo">
                     <small>
-							益和热力
+							综合信息平台
 						</small>
                 </a>
                 <!-- /.brand -->
@@ -352,7 +359,10 @@
     <script src="js/flot/jquery.flot.resize.min.js"></script>
     <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/jquery.dataTables.bootstrap.js"></script>
-    <script src="js/bootstrap-table.js"></script>
+    <script src="js/bootstrap-table.min.js"></script>
+    <script src="js/select2.min.js"></script>
+    <script src="js/bootstrap-table-select2-filter.js"></script>
+    <script src="js/bootstrap-table-zh-CN.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#info').dataTable({
@@ -379,11 +389,12 @@
                 "sAjaxSource": '#'
             });
             
-          $("#nav-left-list .submenu li").click(function(){
-        	  $.get("content/"+this["id"]+".html?random="+Math.random(),null,
-        			  function(data){$("#main-content").html(data)});
-          });
-            
+            $("#nav-left-list .submenu li").click(function () {
+                $.get("content/" + this["id"] + ".html?random=" + Math.random(), null,
+                    function (data) {
+                        $("#main-content").html(data)
+                    });
+            });
         });
     </script>
 

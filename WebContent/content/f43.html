@@ -1,0 +1,69 @@
+<div class="page-content">
+    <div class="page-content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="toolbar" class="btn-group">
+                    <button type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                    <button id="remove" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </div>
+                <table id="table">
+                    <!--
+                    <thead>
+                        <tr>
+                           <th data-checkbox="true"></th>
+                            <th data-field="number">功能编号</th>
+                            <th data-field="name">功能名称</th>
+                        </tr>
+                    </thead>
+-->
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $table=$('#table').bootstrapTable({
+        method: "get",
+        dataType: "json",
+        url: "43data.json",
+        search: true,
+        toolbar: "#toolbar",
+        pagination: true,
+        columns: [
+            {
+                checkbox: true
+             },
+            {
+                field: "number",
+                title: "功能编号",
+                filter: {
+                    type: "select",
+                    data: ["001"]
+                }
+                }, {
+                field: "name",
+                title: "功能名称",
+                filter: {
+                    type: "select",
+                    data: []
+                }
+                }],
+        filter: true
+    });
+ $table.bootstrapTable("setFilterData", "name", ["item 1", "item 2", "item 3"]);
+    var $table = $('#table'),
+        $button = $('#remove');
+    $button.click(function () {
+        var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.num;
+        });
+        $table.bootstrapTable('remove', {
+            field: 'num',
+            values: ids
+        });
+    });
+</script>

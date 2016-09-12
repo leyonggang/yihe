@@ -1,0 +1,78 @@
+<div class="page-content">
+    <div class="page-content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="toolbar" class="btn-group">
+                    <button type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                    <button id="remove" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </div>
+                <table id="table">
+                    <thead>
+                        <tr>
+                           <th data-checkbox="true"></th>
+                            <th data-field="number">角色编号</th>
+                            <th data-field="name">角色名称</th>
+                            <th data-field="function">功能</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            method: "get",
+            dataType: "json",
+            url: "42data.json",
+            columns: [{
+                    checkbox: true
+            },
+                {
+                    field: "number",
+                    title: "角色编号",
+                    filter: {
+                        type: "select",
+                        data: ["001", "002", "003", "004", "005", "006", "007", "008", "009", "010"]
+                    }
+                }, {
+                    field: "name",
+                    title: "角色名称",
+                    filter: {
+                        type: "select",
+                        data: ["后期加"]
+                    }
+                },
+                {
+                    field: "function",
+                    title: "功能",
+                    filter: {
+                        type: "select",
+                        data: ["后期加"]
+                    }
+                }],
+            filter: true,
+            search: true,
+            toolbar: "#toolbar",
+            pagination: true
+        };
+        $('#table').bootstrapTable(options);
+
+        var $table = $('#table'),
+            $button = $('#remove');
+        $button.click(function () {
+            var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                return row.num;
+            });
+            $table.bootstrapTable('remove', {
+                field: 'num',
+                values: ids
+            });
+        });
+    });
+</script>
