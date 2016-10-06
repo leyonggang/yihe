@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-2 control-label">用户名</label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="username" placeholder="用户名" data-bv-notempty="true" data-bv-notempty-message="用户名不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="用户名由中文组成" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="用户名长度在2-10">
+                                    <input type="text" class="form-control" name="account" placeholder="用户名" data-bv-notempty="true" data-bv-notempty-message="用户名不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\w]+$" data-bv-regexp-message="用户名由字母或者数字或者下划线组成" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="用户名长度在2-10">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -52,21 +52,16 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label col-md-offset-2">部门</label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="department" placeholder="部门" data-bv-notempty="true" data-bv-notempty-message="部门不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="部门只能是中文" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="部门长度在2-10">
+                                    <input type="text" class="form-control" name="dept" placeholder="部门" data-bv-notempty="true" data-bv-notempty-message="部门不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\w]+$" data-bv-regexp-message="部门由字母或者数字或者下划线组成" data-bv-stringlength="true" data-bv-stringlength-min="1" data-bv-stringlength-max="10" data-bv-stringlength-message="部门长度在1-10">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-2 control-label">电话</label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="number" placeholder="电话" data-bv-notempty="true" data-bv-notempty-message="电话不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^1\d{10}$" data-bv-regexp-message="电话只能是以1开头的11位数字">
+                                    <input type="text" class="form-control" name="phone" placeholder="电话" data-bv-notempty="true" data-bv-notempty-message="电话不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^1\d{10}$" data-bv-regexp-message="电话只能是以1开头的11位数字">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label col-md-offset-2">角色</label>
-                                <div class="col-md-5">
-                                    <input type="text" class="form-control" name="role" placeholder="角色" data-bv-notempty="true" data-bv-notempty-message="角色不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="角色只能是中文" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="角色长度在2-10">
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <div class="col-md-5 col-md-offset-3">
                                     <button type="submit" class="btn btn-primary">提交</button>
@@ -93,7 +88,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-2 control-label">用户名</label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="e-username" placeholder="用户名" data-bv-notempty="true" data-bv-notempty-message="用户名不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="用户名由中文组成" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="用户名长度在2-10">
+                                    <input type="text" class="form-control" name="e-username" placeholder="用户名" data-bv-notempty="true" data-bv-notempty-message="用户名不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\w]+$" data-bv-regexp-message="用户名由字母或者数字或者下划线组成" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="用户名长度在2-10">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -111,7 +106,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label col-md-offset-2">部门</label>
                                 <div class="col-md-5">
-                                    <input type="text" class="form-control" name="e-department" placeholder="部门" data-bv-notempty="true" data-bv-notempty-message="部门不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="部门只能是中文" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="部门长度在2-10">
+                                    <input type="text" class="form-control" name="e-department" placeholder="部门" data-bv-notempty="true" data-bv-notempty-message="部门不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\w]+$" data-bv-regexp-message="部门由字母或者数字或者下划线组成" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="部门长度在2-10">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -121,14 +116,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 control-label col-md-offset-2">角色</label>
-                                <div class="col-md-5">
-                                    <input type="text" class="form-control" name="e-role" placeholder="角色" data-bv-notempty="true" data-bv-notempty-message="角色不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="角色只能是中文" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="角色长度在2-10">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <div class="col-md-5 col-md-offset-3">
-                                    <button type="submit" class="btn btn-primary">提交</button>
+                                    <button type="submit" class="btn btn-primary" id="f41submit">提交</button>
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
                                 </div>
                             </div>
@@ -140,100 +129,99 @@
         <!--/编辑信息-->
     </div>
 </div>
-
+<script type="text/javascript" src="js/common.js"></script>
 <script>
     $(function () {
-        var options = {
-            method: "get",
-            dataType: "json",
-            url: "41data.json",
-            columns: [{
-                    checkbox: true
-            },
-                {
-                    field: "username",
-                    title: "用户名",
-                    filter: {
-                        type: "input"
-                    }
-                },
-                {
-                    field: "name",
-                    title: "姓名",
-                    filter: {
-                        type: "select",
-                        data: ["后期加"]
-                    }
-                },
-                {
-                    field: "department",
-                    title: "部门",
-                    filter: {
-                        type: "input"
-                    }
-                },
-                {
-                    field: "number",
-                    title: "电话",
-                    filter: {
-                        type: "input"
-                    }
-                },
-                {
-                    field: "role",
-                    title: "角色",
-                    filter: {
-                        type: "select",
-                        data: ["后期加"]
-                    }
-                }],
-            filter: true,
-            search: true,
-            toolbar: "#toolbar",
-            pagination: true,
-            onDblClickRow: onDblClickRow
-        };
-        var $table = $('#table'),
-            $remove = $('#remove');
-        $table.bootstrapTable(options);
+    	var $table = $('#table'),
+        $remove = $('#remove');
+
+
+        $.post("dataGrid!f41Datagrid.action",function(d){
+        	 options = {
+        	            method: "get",
+        	            dataType: "json",
+        	            data:d["rows"],
+        	            columns: [{
+        	                    checkbox: true
+        	            },
+        	                {
+        	                    field: "account",
+        	                    title: "用户名",
+        	                    filter: {
+        	                        type: "input"
+        	                    }
+        	                },
+        	                {
+        	                    field: "name",
+        	                    title: "姓名",
+        	                    filter: {
+        	                        type: "select",
+        	                        data: ["后期加"]
+        	                    }
+        	                },
+        	                {
+        	                    field: "dept",
+        	                    title: "部门",
+        	                    filter: {
+        	                        type: "input"
+        	                    }
+        	                },
+        	                {
+        	                    field: "phone",
+        	                    title: "电话",
+        	                    filter: {
+        	                        type: "input"
+        	                    }
+        	                }],
+        	            filter: true,
+        	            search: true,
+        	            toolbar: "#toolbar",
+        	            pagination: true,
+        	            onDblClickRow: onDblClickRow
+        	        };
+        	$table.bootstrapTable(options);
+        },"json");
+
+
         $remove.click(function () {
             if (confirm("你确定要删除吗？")) {
                 var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-                    return row.num;
+                    return row.account;
                 });
                 $table.bootstrapTable('remove', {
-                    field: 'num',
+                    field: 'account',
                     values: ids
                 });
+                 $.post("objOne!f41DatagridDelete.action",ids,function(data){
+                	alert(data+"操作成功");
+                },"json");
             }
         });
-        $('#addUser').bootstrapValidator();
-        $("#editUser").bootstrapValidator();
+        $("#addUser").each(function () {
+            var $form = $(this);
+            $form.bootstrapValidator().on('success.form.bv', function (e) {
+                // 阻止默认事件提交
+                e.preventDefault();
+            });
+        });
+        $("#editUser").each(function () {
+            var $form = $(this);
+            $form.bootstrapValidator().on('success.form.bv', function (e) {
+                // 阻止默认事件提交
+                e.preventDefault();
+            });
+        });
         /*增加用户表单提交*/
         $('#addUser').submit(function () {
             if ($('#addUser').data('bootstrapValidator').isValid()) {
-                sendRequest({
-                    username: "username",
-                    password: "password",
-                    name: "name",
-                    department: "department",
-                    number: "number",
-                    role: "role"
-                });
+                sendRequest("#addUser","objOne!f41DatagridSave.action");
                 return false;
             } else return false;
         });
         /*编辑用户表单提交*/
         $("#editUser").submit(function () {
             if ($('#editUser').data('bootstrapValidator').isValid()) {
-                sendRequest({
-                    username: "e-username",
-                    password: "e-password",
-                    name: "e-name",
-                    department: "e-department",
-                    number: "e-number",
-                    role: "e-role"
-                });
+                sendRequest("#editUser");
                 return false;
             } else
                 return false;
@@ -255,29 +243,34 @@
             }
         });
         /*提交数据*/
-        function sendRequest(userInfo) {
-            var data = $table.bootstrapTable("getData"),
+        function sendRequest(formId,action) {
+        	/* var data = $table.bootstrapTable("getData"),
                 nums = data.length + 1,
-                username = $("input[name=" + userInfo.username + "]").val(),
+                 username = $("input[name=" + userInfo.username + "]").val(),
                 password = $("input[name=" + userInfo.password + "]").val(),
                 name = $("input[name=" + userInfo.name + "]").val(),
                 department = $("input[name=" + userInfo.department + "]").val(),
-                number = $("input[name=" + userInfo.number + "]").val(),
-                role = $("input[name=" + userInfo.role + "]").val(),
-                info = "num=" + nums + "&username=" + username + "&password=" + password + "&name=" + name + "&department=" + department + "&number=" + number + "&role=" + role;
-            $.ajax({
-                url: "test.aspx",
+                number = $("input[name=" + userInfo.number + "]").val(), */
+                //info = "num=" + nums + "&account=" + username + "&password=" + password + "&name=" + name + "&department=" + department + "&number=" + number;
+            	//info={json:JSON.stringify(lyg.serializeObjectAll($("#addUser")))};
+            	//console.log(json);
+           /*  $.ajax({
+                url: "objOne!f41DatagridSave.action",
                 type: "post",
                 dataType: "json",
-                data: info,
+                data: {json:JSON.stringify(lyg.serializeObjectAll($("#addUser")))},
                 success: function () {
                     alert("保存完毕");
-                    window.location = "index.html";
+                    //window.location = "index.html";
                 },
                 error: function (err) {
                     alert("错误：" + err.status);
                 }
-            });
+            }); */
+            $.post(action,{json:JSON.stringify(lyg.serializeObjectAll($(formId)))},function(data){
+            	alert(data+"操作成功");
+            	window.location="index.html";
+            },"json");
         }
         /*当某行被双击时*/
         function onDblClickRow(row) {
@@ -287,12 +280,12 @@
 
         /*将数据放到表单里*/
         function getValue(row) {
-            $("input[name='e-username']").val(row.username);
+            $("input[name='e-username']").val(row.account);
             $("input[name='e-password']").val(row.password);
             $("input[name='e-name']").val(row.name);
-            $("input[name='e-department']").val(row.department);
-            $("input[name='e-number']").val(row.number);
-            $("input[name='e-role']").val(row.role);
+            $("input[name='e-department']").val(row.dept);
+            $("input[name='e-number']").val(row.phone);
         }
+
     });
 </script>
