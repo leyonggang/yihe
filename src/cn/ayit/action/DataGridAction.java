@@ -47,7 +47,6 @@ public class DataGridAction extends ActionSupport {
 
 	@Resource
 	private DataService dataService;
-	
 	private String json;
 	private String stra;
 	private String strb;
