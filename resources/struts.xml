@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+<constant name="struts.objectFactory" value="spring" />
+<constant name="struts.serve.static.browserCache" value="false"/>
+<constant name="struts.multipart.maxSize" value="1000000000"/>
+<constant name="struts.custom.i18n.resources" value="fileuploadmessage"></constant>
+<constant name="struts.i18n.encoding" value="UTF-8" />
+<constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+
+<package name="json" extends="json-default">
+		<action name="location*" class="locationAction" method="location{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>	
+	
+		<action name="mainTain*" class="mainTainAction" method="mainTain{1}">
+			<result type="json">
+				<param name="root">dataMap</param>
+			</result>
+		</action>	
+	</package>
+	
+</struts>    

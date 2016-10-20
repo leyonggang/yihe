@@ -1,0 +1,124 @@
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=GXkbjcszaqwT3Wqq7piaAEeu"></script>
+<style>
+    .my-form,.my-ul{
+        position:absolute;
+    }
+    .my-div{
+        position:relative
+    }
+    .my-form{
+        width: 40%;
+        left: 50%;
+        top: 10px;
+        margin-left: -20%;
+    }
+</style>
+   <div class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-wrench"></i> 维修定位
+        </li>
+    </ul>
+</div>
+
+<div style="width: 100%;height: 100%;">
+		<div id="workerName" style="float: left; width: 400px;padding-left:5px;">			
+			<table id="worker" class="table">
+			</table>
+		</div>
+		<div id="alocationFrame" style="width: 100%; margin-left:400px;height:600px; border: 2px;">
+			<!-- <iframe id="locationFrame" src="mapLastLocation.jsp" width="800px"></iframe> -->
+		</div>
+		<!-- <div id="allmap"
+			style="width: 100%; margin-left:400px; border: 2px; background-color: red;">&nbsp;</div> -->
+</div>
+<script type="text/javascript">
+	$(function() {
+		$.get("outPrint!findWeixiu.action",function(data){
+		   	 var options = {
+		   	            method: "get",
+		   	            dataType: "json",
+		   	            data:data,
+		   	            columns: [
+		   	                {
+		   	                    field: "account",
+		   	                    title: "人员编码",
+		   	                    width:100		   	                   
+		   	                },
+		   	                {
+		   	                    field: "name",
+		   	                    title: "姓名",
+		   	                    width:100
+		   	                },
+		   	                {
+		   	                    field: "dname",
+		   	                    title: "部门",
+		   	                    width:200
+		   	                }  
+		   	                ],
+		   	            //filter: true,
+		   	            //search: false,
+		   	            //pagination: true,
+		   	            onDblClickRow: onDblClickRow
+		   	        };
+		   	 
+		   		$("#worker").bootstrapTable(options);
+		   },"json");
+
+	});
+	
+	function onDblClickRow(row) {
+	    //showMap(row.account);
+	    //alert(1);
+	    var src="mapLastLocation.jsp?account="+row.account;
+	    $("#alocationFrame").html(lyg.formatString('<iframe scrolling="no" frameborder="0"  src={0} style="width:100%;height:99%;"></iframe>',src));
+
+		/* document.frames[0].location.href ="mapLastLocation.jsp?account"+row.account; */
+		//alert(2);
+	}
+	
+	function showMap(account){
+		$.ajax({
+			url : "locationFindLast.action",
+			data : {
+				account : account
+			},
+			success : function(dataMap) {
+				if (dataMap.msg != "1") {
+					alert(dataMap.msg);
+					return;
+				}
+				if (dataMap.location == null) {
+					alert("没有次员工位置信息");
+					return;
+				}
+
+				var location = dataMap.location;
+				alert(""+location.locationDate+" "+location.locationTime);
+				//alert("鏃堕棿锛�" + location.dateTime);
+				//var Longitude = 114.38;
+				//var Latitude = 36.10;
+
+				var Longitude = location.longitude;
+				var Latitude = location.latitude;
+
+				alert(1);
+			
+
+				var map = new BMap.Map("allmap");
+				map.centerAndZoom(new BMap.Point(Longitude, Latitude), 16);
+				map.enableScrollWheelZoom(true);
+				var point = new BMap.Point(Longitude, Latitude);
+				var label = new BMap.Label(location.dateTime, {
+					offset : new BMap.Size(-20, -20)
+				});
+				var marker1 = new BMap.Marker(point); // 创建标注  
+				marker1.setLabel(label);
+				map.addOverlay(marker1); // 将标注添加到地图中  
+				map.panTo(point);
+				alert(4);
+			}
+		});
+	}
+</script>

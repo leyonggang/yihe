@@ -1,0 +1,26 @@
+{
+    "lista": [{
+        "desc": "1",
+        "selected": false,
+        "text": "开发区",
+        "value": "1"
+    }, {
+        "desc": "1",
+        "selected": false,
+        "text": "文峰区片区",
+        "value": "2"
+    }, {
+        "desc": null,
+        "selected": false,
+        "text": "平原路片区",
+        "value": "4"
+    }, {
+        "desc": null,
+        "selected": false,
+        "text": "铁西北片区",
+        "value": "5"
+    }],
+    "mes": "suc",
+    "obja": null,
+    "rows": []
+}

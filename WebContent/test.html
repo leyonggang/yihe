@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ <script src="js/jquery-2.0.3.min.js"></script>
+ 
+</head>
+<body>
+<script type="text/javascript">
+
+/*$.ajax({
+    type: "get",
+    url: "http://112.53.100.152:8888/ForGongXueYuan/ForGongXueYuan.aspx?type=HRZ&PQ=%E5%BC%80%E5%8F%91%E5%8C%BA",
+    dataType: 'jsonp',
+        jsonp: 'jsoncallback',
+    timeout: 15000,
+    async: false,
+     beforeSend: function (xhr) {
+        xhr.setRequestHeader("If-Modified-Since", "0");
+        xhr.setRequestHeader("Authorization", "Basic " + m_szUserPwdValue);
+    }, 
+    success: function (xmlDoc, textStatus, xhr) {
+        var oXmlUPnP = xmlDoc;
+    }
+})
+function receive(data) {  
+	 console.info(data);
+}  
+*/
+$.post("dataGrid!f11Datagrid.action",{json:"{\"year\":\"2016\",\"compqtype\":\"平原路片区\",\"ownername\":\"肖玉霞\"}"},function(data){
+	
+},"json");
+
+ </script>
+ 
+</body>
+</html>

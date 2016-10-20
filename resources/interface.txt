@@ -1,0 +1,45 @@
+登录认证
+http://localhost:8080/yihe/dataGrid!login.action?stra=t1&strb=1  {stra:用户名,strb:密码}
+http://localhost:8080/yihe/dataGrid!userInfo.action
+http://localhost:8080/yihe/dataGrid!logout.action
+
+
+一级功能列表
+http://localhost:8080/yihe/dataGrid!getComboBoxFunctionsLevel1.action
+二级功能列表
+http://localhost:8080/yihe/dataGrid!getComboBoxFunctions.action
+部门列表
+http://localhost:8080/yihe/dataGrid!getComboBoxDepts.action
+
+用户数据查询f11
+http://localhost:8080/yihe/dataGrid!f11Datagrid.action?json={year:"2016",compqtype:"平原路片区",ownername:"肖玉霞"}
+热表数据
+http://localhost:8080/yihe/dataGrid!f11DataRb.action?stra=5325
+
+管网数据查询f12
+http://localhost:8080/yihe/outPrint!f12Datagrid.action?stra=%E5%BC%80%E5%8F%91%E5%8C%BA
+
+
+维修、巡线人员数据
+http://localhost:8080/yihe/outPrint!findWeixiu.action
+http://localhost:8080/yihe/outPrint!findXunxian.action
+
+
+用户管理f41 表格数据
+http://localhost:8080/yihe/dataGrid!f41Datagrid.action
+http://localhost:8080/yihe/dataGrid!f41DatagridSave.action
+http://localhost:8080/yihe/dataGrid!f41DatagridDelete.action
+
+部门管理f42 表格数据
+http://localhost:8080/yihe/outPrint!f42Datagrid.action
+http://localhost:8080/yihe/dataGrid!f42DatagridSave.action
+http://localhost:8080/yihe/dataGrid!f42DatagridDelete.action
+
+功能管理f43 表格数据
+http://localhost:8080/yihe/outPrint!f43Datagrid.action
+http://localhost:8080/yihe/dataGrid!f43DatagridSave.action
+http://localhost:8080/yihe/dataGrid!f43DatagridDelete.action
+
+
+
+

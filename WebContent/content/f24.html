@@ -1,0 +1,132 @@
+<div class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-search"></i> 维修信息
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$('#beginDate').datepicker({
+			format : 'yyyy-mm-dd',
+			weekStart : 1,
+			autoclose : true,
+			todayBtn : 'linked',
+			language : 'zh-CN'
+		});
+		var date = new Date();
+		$('#beginDate').datepicker('setDate',
+				new Date(date.getTime() - 30 * 1000 * 60 * 60 * 24));
+
+		$('#endDate').datepicker({
+			format : 'yyyy-mm-dd',
+			weekStart : 1,
+			autoclose : true,
+			todayBtn : 'linked',
+			language : 'zh-CN'
+		});
+		var date = new Date();
+		$('#endDate').datepicker('setDate', date);
+		$.ajax({
+			url : "mainTainFindCommunity.action",
+			data : $('#condition').serialize(),
+			success : function(dataMap) {
+				/*if (dataMap.msg != "1") {
+					alert(msg);
+					return;
+				}*/
+				var options = {
+						method : "get",
+						dataType : "json",
+						data : dataMap.ls,
+						columns : [ {
+							checkbox : true
+						}, {
+							field : "m_code",
+							title : "维修单号"
+						}, {
+							field : "m_HANDTYPE",
+							title : "维修类型"
+						}, {
+							field : "m_DEALOPERATOR",
+							title : "维修工姓名"
+						}, {
+							field : "m_DISPATCHTIME",
+							title : "派单时间"
+						}, {
+							field : "m_DEALTIME",
+							title : "工单处理时间"
+						}, {
+							field : "m_ADDRESS",
+							title : "用户地址"
+						}, {
+							field : "m_LINKMAN",
+							title : "用户名称"
+						}, {
+							field : "m_DISPATCHCONTENT",
+							title : "派单内容"
+						}, {
+							field : "m_DEALCONTENT",
+							title : "处理内容"
+						},
+
+						{
+							field : "m_DEALRESULT",
+							title : "处理结果"
+						},
+
+						{
+							field : "m_backtime",
+							title : "处回访时间"
+						}, {
+							field : "m_backManner",
+							title : "服务态度"
+						}, {
+							field : "m_backQuality",
+							title : "服务质量"
+						} ],
+					//filter : true,
+					//search : true,
+					toolbar : "#toolbar",
+					pagination : true
+				};
+				$("#mainTain").bootstrapTable(options);
+
+			}
+		});
+	});
+
+	function findMainTain() {
+		$.ajax({
+			url : "mainTainFindCommunity.action",
+			data : $('#condition').serialize(),
+			success:function(dataMap){
+				$('#mainTain').bootstrapTable("load",dataMap.ls);
+			}
+		});
+	}
+</script>
+	<div id="toolbar"
+		style="padding-left: 5px; width: 1000px;">
+		<form id="condition">
+			<table>
+				<tr>
+					<td width="60px" style="text-align: right;">小区名称</td>
+					<td width="60px"><input type="text" id="communityName"
+						name="communityName"></td>
+					<td width="100px" style="text-align: right;">日期起始</td>
+					<td width="60px"><input type="text" class="span9"
+						id="beginDate" name="beginDate"></td>
+					<td width="80px" style="text-align: right;">截止</td>
+					<td width="60px"><input type="text" class="span9" id="endDate"
+						name="endDate"></td>
+					<td width="80px" style="text-align: center;"><button
+							type="button" class="btn btn-default" onclick="findMainTain();">查 询</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div style="position: absolute;top: 40px">
+		<table id="mainTain" class="table">			
+		</table>
+	</div>

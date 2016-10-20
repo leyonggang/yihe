@@ -1,0 +1,77 @@
+<div class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-sort"></i> 管网监测数据
+        </li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="page-content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="toolbar" class="btn-group">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label>片区：</label>
+                            <select id="dept">
+                            <option value="安东北">安东北</option>
+                            <option value="安东南">安东南</option>
+                            <option value="安漳区">安漳区</option>
+                            <option value="灯塔路">灯塔路</option>
+                            <option value="洹北区">洹北区</option>
+                            <option selected value="开发区">开发区</option>
+                            <option value="平原区">平原区</option>
+                            <option value="三角湖">三角湖</option>
+                            <option value="铁西北">铁西北</option>
+                            <option value="铁西南">铁西南</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <table id="table" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th data-field="dt" data-width="20">时间</th>
+                            <th data-field="PQ" data-width="50">片区</th>
+                            <th data-field="name" data-width="80">换热站名称</th>
+                            <th data-field="T1">一次网供温</th>
+                            <th data-field="T2">一次网回温</th>
+                            <th data-field="P1">一次网供压</th>
+                            <th data-field="P2">一次网回压</th>
+                            <th data-field="CRL2">一次网流量t/h</th>
+                            <th data-field="CRL4">一次网热量GJ/h</th>
+                            <th data-field="AIW1">一次网阀开</th>
+                            <th data-field="T3">二次网供温</th>
+                            <th data-field="T4">二次网回温</th>
+                            <th data-field="P3">二次网供压</th>
+                            <th data-field="P4">二次网回压</th>
+                            <th data-field="FM5">用户阀门</th>
+                            <th data-field="FM1">调节阀开度供水</th>
+                            <th data-field="FM2">调节阀开度回水</th>
+                            <th data-field="FM3">站内阀门开度供水</th>
+                            <th data-field="FM4">站内阀门开度回水</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#dept").on("change",function(){
+            $('#table').bootstrapTable("refresh",{query: {stra:$(this).val()}});
+        });
+        $('#table').bootstrapTable({
+            method: "get",
+            url: "outPrint!f12Datagrid.action",
+            queryParams: {
+                stra: "开发区"
+            },
+            dataType: "json",
+            search: true,
+            toolbar: "#toolbar",
+            pagination: true
+    });
+    })
+</script>

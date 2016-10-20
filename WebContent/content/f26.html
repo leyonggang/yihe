@@ -1,0 +1,260 @@
+<div class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-search"></i> 维修报表(人员)
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+$(function() {
+	$('#beginDate').datepicker({
+		format : 'yyyy-mm-dd',
+		weekStart : 1,
+		autoclose : true,
+		todayBtn : 'linked',
+		language : 'zh-CN',
+		defaultDate : +1
+	});
+	var date = new Date();
+	$('#beginDate').datepicker('setDate',
+			new Date(date.getTime() - 30 * 1000 * 60 * 60 * 24));
+
+	$('#endDate').datepicker({
+		format : 'yyyy-mm-dd',
+		weekStart : 1,
+		autoclose : true,
+		todayBtn : 'linked',
+		language : 'zh-CN'
+	});
+	var date = new Date();
+	$('#endDate').datepicker('setDate', date)
+});
+
+
+	function statistic() {
+		$(function() {
+			$
+					.ajax({
+						url : "mainTainReportWorker.action",
+						data : $('#condition').serialize(),
+						success : function(dataMap) {
+							if (dataMap.msg != "1") {
+								alert(dataMap.msg);
+								return;
+							}
+
+							var condinfo = $("#condinfo");
+							condinfo.text("");
+							condinfo.append("<p>" + $("#workerName").val()
+									+ "&nbsp;&nbsp;&nbsp;&nbsp;"
+									+ $("#beginDate").val()
+									+ "&nbsp;&nbsp;至&nbsp;&nbsp;"
+									+ $("#endDate").val());
+
+							var info = $("#info");
+							info.text("");// 清空数据
+							var orderReport = dataMap.orderReport;
+							//alert(orderReport.orderCount);					 
+							info.append("<p>派单情况： " + orderReport.orderCount
+									+ " 个</p>");
+							info.append("<p>工单状态： 待处理 "
+									+ orderReport.processCount + " 个，已延时  "
+									+ orderReport.delayCount + " 个，咨询归档 "
+									+ orderReport.archiveCount + " 个，处理完毕 "
+									+ orderReport.overCount + " 个</p>");
+							info.append("<p>服务态度： 满意 "
+									+ orderReport.statisfyCount + " 个，不满意 "
+									+ orderReport.noStatisfyCount + " 个</p>");
+							info.append("<p>服务质量：问题解决 " + orderReport.okCount
+									+ " 个，问题有遗留 " + orderReport.noOkCount
+									+ " 个，</p><hr>");
+	
+							var data1 = [ {
+								name : '待处理',
+								y : orderReport.processCount
+							}, {
+								name : '已延时',
+								y : orderReport.delayCount
+							}, {
+								name : '咨询归档',
+								y : orderReport.archiveCount
+							}, {
+								name : '处理完毕',
+								y : orderReport.overCount
+							} ];
+
+							var data2 = [ {
+								name : '满意 ',
+								y : orderReport.statisfyCount
+							}, {
+								name : '不满意',
+								y : orderReport.noStatisfyCount
+							} ]
+
+							var data3 = [ {
+								name : '问题解决 ',
+								y : orderReport.okCount
+							}, {
+								name : '问题有遗留',
+								y : orderReport.noOkCount
+							} ];
+							$('#report1')
+									.highcharts(
+											{
+												chart : {
+													plotBackgroundColor : null,
+													plotBorderWidth : null,
+													plotShadow : false,
+													type : 'pie'
+												},
+												title : {
+													text : '工单状态饼图'
+												},
+												tooltip : {
+													pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+												},
+												plotOptions : {
+													pie : {
+														allowPointSelect : true,
+														cursor : 'pointer',
+														dataLabels : {
+															enabled : true,
+															format : '<b>{point.name}</b>: {point.percentage:.1f} %',
+															style : {
+																color : (Highcharts.theme && Highcharts.theme.contrastTextColor)
+																		|| 'black'
+															}
+														}
+													}
+												},
+												series : [ {
+													name : 'Brands',
+													colorByPoint : true,
+													data : data1
+												} ]
+											});
+
+							$('#report2')
+									.highcharts(
+											{
+												chart : {
+													plotBackgroundColor : null,
+													plotBorderWidth : null,
+													plotShadow : false,
+													type : 'pie'
+												},
+												title : {
+													text : '服务态度饼图'
+												},
+												tooltip : {
+													pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+												},
+												plotOptions : {
+													pie : {
+														allowPointSelect : true,
+														cursor : 'pointer',
+														dataLabels : {
+															enabled : true,
+															format : '<b>{point.name}</b>: {point.percentage:.1f} %',
+															style : {
+																color : (Highcharts.theme && Highcharts.theme.contrastTextColor)
+																		|| 'black'
+															}
+														}
+													}
+												},
+												series : [ {
+													name : 'Brands',
+													colorByPoint : true,
+													data : data2
+												} ]
+											});
+
+							$('#report3')
+									.highcharts(
+											{
+												chart : {
+													plotBackgroundColor : null,
+													plotBorderWidth : null,
+													plotShadow : false,
+													type : 'pie'
+												},
+												title : {
+													text : '服务质量饼图'
+												},
+												tooltip : {
+													pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+												},
+												plotOptions : {
+													pie : {
+														allowPointSelect : true,
+														cursor : 'pointer',
+														dataLabels : {
+															enabled : true,
+															format : '<b>{point.name}</b>: {point.percentage:.1f} %',
+															style : {
+																color : (Highcharts.theme && Highcharts.theme.contrastTextColor)
+																		|| 'black'
+															}
+														}
+													}
+												},
+												series : [ {
+													name : 'Brands',
+													colorByPoint : true,
+													data : data3
+												} ]
+											});
+
+						}
+					});
+		});
+
+	}
+
+	function printReport() {
+		var headstr = "<html><head><title>&nbsp;</title></head><body>";
+		var footstr = "</body>";
+		var printData = document.getElementById("print_div").innerHTML;
+		var oldstr = document.body.innerHTML;
+		document.body.innerHTML = headstr + printData + footstr;
+		window.print();
+		document.body.innerHTML = oldstr;
+		return;
+	}
+</script>
+
+<div style="padding-left: 5px;margin:20px auto; width: 1000px;">
+		<form id="condition">
+			<table>
+				<tr>
+					<td width="80px" style="text-align: right;">维修人员：</td>
+					<td width="60px"><input type="text" id="workerName" name="workerName"></td>
+					<td width="100px" style="text-align: right;">日期起始：</td>
+					<td width="60px"><input type="text" class="span9" id="beginDate"
+						name="beginDate"></td>
+					<td width="80px" style="text-align: right;">截止：</td>
+					<td width="60px"><input type="text" class="span9" id="endDate"
+						name="endDate"></td>
+					<td width="80px" style="text-align: center;"><button type="button" class="btn btn-default"
+							onclick="statistic();">统 计</button></td>
+					<td width="80px" style="text-align: center;"><button type="button" class="btn btn-default"
+							onclick="printReport();">打 印</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	
+	<div id="print_div" style="margin: 0 auto; width: 1000px; border: 1px solid">
+		<div
+			style="margin: 0 auto; width: 1000px; font-size: 32px; text-align: center;">维修统计报表</div>
+		<div id="condinfo"
+			style="margin: 0 auto; width: 1000px; text-align: center; font-size: 14px;"></div>
+		<div id="info"
+			style="margin: 0 auto; width: 1000px; padding-left: 100px; font-size: 16px; "></div>
+		<div style="margin: 0 auto; width: 1000px; text-align: center; padding-left: 220px">
+			<div id="report1" style="width: 500px; "></div>
+			<div id="report2" style="width: 500px; "></div>
+			<div id="report3" style="width: 500px; "></div>
+		</div>
+	</div>

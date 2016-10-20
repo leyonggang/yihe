@@ -1,0 +1,48 @@
+{
+    "lista": null,
+    "mes": "suc",
+    "obja": {
+        "account": "t1",
+        "dept": {
+            "did": 1,
+            "name": "开发区",
+            "type": 1
+        },
+        "functions": [{
+            "fid": 11,
+            "name": "用户基本情况",
+            "pfid": 1,
+            "type": 2
+        }, {
+            "fid": 12,
+            "name": "管网监测数据",
+            "pfid": 1,
+            "type": 2
+        }, {
+            "fid": 4,
+            "name": "系统管理",
+            "pfid": null,
+            "type": 1
+        }, {
+            "fid": 2,
+            "name": "维修人员调度",
+            "pfid": null,
+            "type": 1
+        }, {
+            "fid": 1,
+            "name": "信息查询",
+            "pfid": null,
+            "type": 1
+        }, {
+            "fid": 23,
+            "name": "巡视人员工作轨迹",
+            "pfid": 2,
+            "type": 2
+        }],
+        "name": "测试帐号1",
+        "password": "4ca4238a0b923820",
+        "phone": "110",
+        "type": 1
+    },
+    "rows": []
+}

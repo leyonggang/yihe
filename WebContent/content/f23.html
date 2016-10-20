@@ -1,0 +1,128 @@
+<div class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-search"></i> 寻线轨迹
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript"> 
+$(function(){
+	
+	$('#date').datepicker({
+		  format: 'yyyy-mm-dd',
+		        weekStart: 1,
+		        autoclose: true,
+		        todayBtn: 'linked',
+		        language: 'zh-CN'
+		 });
+	var date = new Date();
+	$('#date').datepicker( 'setDate' , date )
+
+
+	
+	$.get("outPrint!findXunxian.action",function(data){
+   	 var options = {
+   	            method: "get",
+   	            dataType: "json",
+   	            data:data,
+   	            columns: [
+   	                {
+   	                    field: "account",
+   	                    title: "人员编码"
+   	                },
+   	                {
+   	                    field: "name",
+   	                    title: "姓名"
+   	                },
+   	                {
+   	                    field: "dname",
+   	                    title: "部门"   	                   
+   	                }  
+   	                ],
+   	            //filter: true,
+   	            //search: true,
+   	            //toolbar: "#toolbar",
+   	            //pagination: true,
+   	            onDblClickRow: onDblClickRow
+   	        };
+   		$("#worker").bootstrapTable(options);
+   },"json");
+	
+});	
+
+function onDblClickRow(row) {
+    //showMap(row.account);
+	var date = $("#date").val();
+	if(date==null || date ==""){
+		alert("日期不能为空");
+		alert(date);
+		return;
+	}
+	 var src="mapLocations.jsp?account="+row.account+"&date="+date;
+	    $("#alocationFrame").html(lyg.formatString('<iframe scrolling="no" frameborder="0"  src={0} style="width:100%;height:99%;"></iframe>',src));
+
+}
+function showMap(account){
+	
+	var date = $("#date").val();
+	if(date==null || date ==""){
+		alert("日期不能为空");
+		alert(date);
+		return;
+	}
+	
+	$.ajax({
+		  url: "locationFind.action",
+		  data: {
+		      account: account,
+		      date:date
+		  },		 
+		  success: function( dataMap ) {
+			  if(dataMap.msg!="1"){
+				  alert(dataMap.msg);
+				  return;
+			  }
+			  
+			  if(dataMap.ls.length==0){
+				  alert("指定的日期内，此员工没有数据");
+				  return ;
+			  }
+			  var points= new Array();
+			  for(var i=0;i<dataMap.ls.length;i++){
+				  var location =dataMap.ls[i];
+				  alert(location.longitude+"="+location.latitude);
+			  	  points[i]=new BMap.Point(location.longitude,location.latitude);
+			   }
+			   var map = new BMap.Map("container");
+			   map.centerAndZoom(points[0], 14);
+			   map.enableScrollWheelZoom();
+			   var driving = new BMap.DrivingRoute(map);
+
+			  for(var i=0;i<points.length-1;i++){
+			  	  var start = points[i];
+			  	  var end = points[i+1];	
+			  	  driving.search(start, end);
+			  	  driving.setSearchCompleteCallback(function() {
+			  		  points1 = driving.getResults().getPlan(0).getRoute(0).getPath();	
+			  		  map.addOverlay(new BMap.Polyline(points1, {strokeColor: "black", strokeWeight: 5, strokeOpacity: 1}));
+			      });
+			  	var centerPoint = new BMap.Point((points[0].lng + points[points.length - 1].lng)/2, (points[0].lat + points[points.length - 1].lat)/2);
+				  map.panTo(centerPoint);			  	
+			  }	  
+		}
+  });
+}
+</script>
+
+	<div style="width: 100%">
+		<div id="workerName" style="float: left; width: 400px;padding-left:5px;">			
+					<input type="text" class="span9" value="" id="date">					
+			<table id="worker" class="table">
+			</table>
+		</div>
+<div id="alocationFrame" style="width: 100%; margin-left:400px;height:600px; border: 2px;">
+			<!-- <iframe id="locationFrame" src="mapLastLocation.jsp" width="800px"></iframe> -->
+		</div>		
+
+	</div>

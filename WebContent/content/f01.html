@@ -1,0 +1,91 @@
+<div class="page-content">
+    <div class="page-content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="editInfo" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 col-md-offset-2 control-label">用户名</label>
+                        <div class="col-md-5">
+                            <input name="account" type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label col-md-offset-2">姓名</label>
+                        <div class="col-md-5">
+                             <input type="text" class="form-control" name="name" placeholder="姓名" data-bv-notempty="true" data-bv-notempty-message="姓名不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="姓名只能是中文" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="6" data-bv-stringlength-message="姓名长度在2-6">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label col-md-offset-2">部门</label>
+                        <div class="col-md-5">
+                           <input name="dname" type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 col-md-offset-2 control-label">电话</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" name="phone" placeholder="电话" data-bv-notempty="true" data-bv-notempty-message="电话不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^1\d{10}$" data-bv-regexp-message="电话只能是以1开头的11位数字">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 col-md-offset-2 control-label">功能</label>
+                        <div class="col-md-5">
+                            <input name="funName" class="form-control" type="text" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-5 col-md-offset-5">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function(){
+   $(".select-edit-fun,.select-add-fun").chosen();
+        $("#editInfo").find('.chosen-container').each(function(){
+           $(this).css("width","100%");
+        });
+    $("#editInfo").each(function () {
+            var $form = $(this);
+            $form.bootstrapValidator().on('success.form.bv', function (e) {
+                // 阻止默认事件提交
+                e.preventDefault();
+            });
+        });
+
+        $("input[name='account']").val(user.obja.account);
+        $("input[name='name']").val(user.obja.name);
+        $("input[name='dname']").val(user.obja.dept.name);
+        $("input[name='phone']").val(user.obja.phone);
+        var funNames="";
+        $.each(user.obja.functions,function(i,n){
+        	funNames+=(n["name"]+",");
+        });
+        $("input[name='funName']").val(funNames);
+        
+
+    $("#editInfo").each(function () {
+            var $form = $(this);
+            $form.bootstrapValidator().on('success.form.bv', function (e) {
+                // 阻止默认事件提交
+                e.preventDefault();
+            });
+        });
+    $("#editInfo").submit(function () {
+            if ($('#editInfo').data('bootstrapValidator').isValid()) {
+               $.post("dataGrid!f41DatagridSave.action",{json:JSON.stringify(lyg.serializeObjectAll($("#editInfo")))},function(data){
+                   alert(data+"操作成功");
+               });
+                return false;
+            } else
+                return false;
+        });
+});
+</script>

@@ -1,0 +1,196 @@
+<div class="breadcrumbs">
+   <ul class="breadcrumb">
+    <li>
+        <i class="glyphicon glyphicon-tower"></i>
+        部门管理
+    </li>
+    </ul>
+</div>
+   <div class="page-content">
+    <div class="page-content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="toolbar" class="btn-group">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                    <button id="editButton2" type="button" class="btn btn-default" data-toggle="modal" data-target="#edit">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                    </button>
+                    <button type="button" id="editButton1" class="btn btn-default" style="display:none" data-toggle="modal" data-target="#edit"></button>
+                    <button id="remove" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </div>
+                <table id="table">
+                    
+                </table>
+            </div>
+        </div>
+        <!--增加部门-->
+        <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">取消</span></button>
+                        <h4 class="modal-title">增加部门</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="addDept" class="form-horizontal">
+                            
+                            <div class="form-group">
+                                <label class="col-md-2 control-label col-md-offset-2">部门名称</label>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="dname" placeholder="部门名称" data-bv-notempty="true" data-bv-notempty-message="部门名称不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="部门名称只能是中文" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="部门名称长度在2-10">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5 col-md-offset-3">
+                                    <button type="submit" class="btn btn-primary">提交</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/增加部门-->
+        <!--编辑部门-->
+        <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">取消</span></button>
+                        <h4 class="modal-title">编辑部门</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="editDept" class="form-horizontal">
+                        
+                            <div class="form-group">
+                                <label class="col-md-2 control-label col-md-offset-2">部门名称</label>
+                                <div class="col-md-5">
+                                 	<input type="hidden"  name="did">
+                                    <input type="text" class="form-control" name="dname" placeholder="部门名称" data-bv-notempty="true" data-bv-notempty-message="部门名称不能为空" data-bv-regexp="true" data-bv-regexp-regexp="^[\u4e00-\u9fa5]+$" data-bv-regexp-message="部门名称只能是中文" data-bv-stringlength="true" data-bv-stringlength-min="2" data-bv-stringlength-max="10" data-bv-stringlength-message="部门名称长度在2-10">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-5 col-md-offset-3">
+                                    <button type="submit" class="btn btn-primary">提交</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/编辑部门-->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+    	$('#add').on('show.bs.modal', function (e) {
+              $(this).find("input").val("");
+        });
+        var options = {
+            method: "get",
+            dataType: "json",
+            url: "outPrint!f42Datagrid.action",
+            columns: [{
+                    checkbox: true
+            },
+                {
+                    field: "did",
+                    title: "部门编号"
+                }, {
+                    field: "dname",
+                    title: "部门名称"
+                }],
+            search: true,
+            toolbar: "#toolbar",
+            pagination: true,
+            onDblClickRow: onDblClickRow
+        };
+        $('#table').bootstrapTable(options);
+
+        var $table = $('#table'),
+            $button = $('#remove');
+        $button.click(function () {
+            if (confirm("你确定要删除吗？")) {
+            	var param="";
+                var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                	param=param+"&arrya="+row.did
+                    return row.did;
+                });
+            	$.get("dataGrid!f42DatagridDelete.action?"+param.substring(1),null,function(data){
+            		//console.log(data.mes);
+            	},"json");
+                $table.bootstrapTable('remove', {
+                    field: 'did',
+                    values: ids
+                });
+            }
+        });
+        $("#addDept,#editDept").each(function () {
+            var $form = $(this);
+            $form.bootstrapValidator().on('success.form.bv', function (e) {
+                // 阻止默认事件提交
+                e.preventDefault();
+            });
+        });
+        /*增加部门表单提交*/
+        $('#addDept').submit(function () {
+            if ($('#addDept').data('bootstrapValidator').isValid()) {
+                sendRequest("#addDept","dataGrid!f42DatagridSave.action");
+                return false;
+            } else
+                return false;
+        });
+        /*编辑部门表单提交*/
+        $("#editDept").submit(function () {
+            if ($("#editDept").data('bootstrapValidator').isValid()) {
+                sendRequest("#editDept","dataGrid!f42DatagridSave.action");
+                return false;
+            } else return false;
+        });
+        /*当工具栏的编辑按钮被点时*/
+        $("#editButton2").on("click", function () {
+            var l = [];
+            var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                l.push(row);
+            });
+            if (l.length === 1) {
+                getValue(l[0]);
+            } else if (l.length > 1) {
+                alert("一次只能编辑一行");
+                return false;
+            } else {
+                alert("请选择一行来进行编辑");
+                return false;
+            }
+        });
+        /*当某行被双击时*/
+        function onDblClickRow(row) {
+            $("#editButton1").trigger("click");
+            getValue(row);
+        }
+        /*将数据放到表单里*/
+        function getValue(row) { 
+        	$("input[name='did']").val(row.did);
+            $("input[name='dname']").val(row.dname);
+        }
+        /*提交数据*/
+        function sendRequest(formId, action) {
+            $.post(action, {
+                json: JSON.stringify(lyg.serializeObjectAll($(formId)))
+            }, function (data) {
+                $('#add').add("#edit").modal('hide');
+                $('#table').bootstrapTable("refresh");
+            }, "json");
+        }
+       
+    });
+</script>
