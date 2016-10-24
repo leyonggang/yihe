@@ -388,8 +388,7 @@
                         });
                 }
             });
-            //dataGrid!userInfo.action
-            $.get("login.json", function (data) {
+            $.get("dataGrid!userInfo.action", function (data) {
                 if (data["obja"] == null) {
                     window.location = "login.html";
                 } else {
