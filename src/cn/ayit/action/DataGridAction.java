@@ -154,8 +154,8 @@ public class DataGridAction extends ActionSupport {
 	}
 	
 	public String f11DataRb() throws Exception {
-		List<Map<String, Object>> es=dataService.f11DataRb(stra);
-		if(es!=null)objs=es;mes="suc";
+		Map<String, Object> es=dataService.f11DataRb(stra);
+		if(es!=null)obja=es;mes="suc";
 		return SUCCESS;
 	}
 

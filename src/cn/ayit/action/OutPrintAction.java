@@ -5,11 +5,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,15 +68,15 @@ public class OutPrintAction extends ActionSupport implements Preparable{
 		return null;
 	}
 	
+	
 	public String f12Datagrid() throws Exception {
-		String getURL ="http://112.53.100.152:8888/ForGongXueYuan/ForGongXueYuan.aspx?type=HRZ&PQ="+URLEncoder.encode(stra,"utf-8");
+		String getURL ="http://10.10.24.226:8888/ForGongXueYuan/ForGongXueYuan.aspx?type=HRZ&PQ="+URLEncoder.encode(stra,"utf-8");
 		URL getUrl = new URL(getURL);
 		HttpURLConnection connection = (HttpURLConnection) getUrl.openConnection();
 		connection.connect();
 		 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
          String lines;
          while ((lines = reader.readLine()) != null) {
-                 //System.out.println(lines);
                  out.append(lines);
          }
          reader.close();

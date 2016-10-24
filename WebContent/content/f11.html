@@ -52,8 +52,9 @@
                             <th data-field="ADDRESS">地址</th>
                             <th data-field="COMBUILDAREA">面积</th>
                             <th data-field="SF_STATUS">交费情况</th>
-                            <th data-field="JC_STATUS">开关检状态</th>
-                            <th data-field="BOLTSTATUS">用户报停信息</th>
+                            <th data-field="JC_STATUS">稽查信息</th>
+                            <th data-field="BOLTSTATUS">开关检状态</th>
+                            <th data-field="SY_BH">热表编号</th>
                         </tr>
                     </thead>
                 </table>
@@ -90,7 +91,21 @@
             },
             search: true,
             toolbar: "#toolbar",
-            pagination: true
+            pagination: true,
+            detailView:true,
+            onExpandRow:function(index, row, $detail){
+            	if(row["SY_BH"]==null) {$detail.append("无热表数据");return false;}
+            	$.get("dataGrid!f11DataRb.action",{stra:row["SY_BH"]},function(data){
+            		if(data.obja==null){$detail.append("厂商未提供热表数据");return false;}
+            		$detail.append("抄表时间："+data.obja.COMMANDTIME+"<br>")
+            		.append("流量："+data.obja.FLOW+"&emsp;&emsp;&emsp;")
+            		.append("总流量："+data.obja.TOTALFLOW+"&emsp;&emsp;&emsp;")
+            		.append("总热量："+data.obja.TOTALHEAT+"<br>")
+            		.append("入口温度："+data.obja.FEADWATERTEMPERATURE+"&emsp;&emsp;&emsp;")
+            		.append("回温："+data.obja.RETURNWATERTEMPERATURE+"&emsp;&emsp;&emsp;")
+            		.append("警告信息："+data.obja.WARNING+"<br>");
+            	},"json");
+            }
         });
         $("#year").val("2016");
         var $table = $('#table');

@@ -95,7 +95,7 @@
                                                     data-bv-notempty="true"
                                                     data-bv-notempty-message="密码不能为空"
                                                     data-bv-stringlength="true"
-                                                    data-bv-stringlength-min="6"
+                                                    data-bv-stringlength-min="1"
                                                     data-bv-stringlength-max="20"
                                                     data-bv-stringlength-message="密码长度在6-20之间">
                                                     <i class="ace-icon fa fa-lock"></i>
@@ -167,7 +167,6 @@
                     $.post("dataGrid!login.action", {stra:$("input[name='l-username']").val(),
                     	strb:$("input[name='l-password']").val()}, function (data) {
 
-                        console.log(data);
                         if(data.mes==="suc"){
                             window.location="index.html";
                         }else{

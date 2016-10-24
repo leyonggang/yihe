@@ -18,7 +18,7 @@ public interface DataService {
 	//f11用户信息数据查询
 	public List<Map<String, Object>> f11Datagrid(Map<String, Object> map);
 	public long f11DatagridCount(Map<String, Object> map);
-	public List<Map<String, Object>> f11DataRb(String userid);
+	public Map<String, Object> f11DataRb(String meterserialno);
 	
 	
 	
@@ -49,6 +49,7 @@ public interface DataService {
 	public List<ComboBox> getComboBoxFunctions();
 	public List<ComboBox> getComboBoxDepts();
 	public List<ComboBox> getComboBoxFunctionsLevel1();
+	
 	
 	
 	

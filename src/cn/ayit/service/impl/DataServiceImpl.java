@@ -114,10 +114,14 @@ public class DataServiceImpl implements DataService{
 	}
 	
 	@Override
-	public List<Map<String, Object>> f11DataRb(String userid) {
+	public Map<String, Object> f11DataRb(String meterserialno) {
 		String sql="select commandtime,userid,meterserialno,flow,totalflow,totalheat,FEADWATERTEMPERATURE,RETURNWATERTEMPERATURE,warning,userstatus "
-				+ "from rms.yhrl_record t where userid=? and rownum=1 order by commandtime desc";
-		return simpleRb.queryForList(sql,userid);
+				+ "from rms.yhrl_record t where meterserialno=? and rownum=1 order by commandtime desc";
+		try {
+			return  simpleRb.queryForMap(sql, "1111"+meterserialno);
+		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 	
 	@Override
