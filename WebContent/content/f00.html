@@ -1,0 +1,66 @@
+<div class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-pencil"></i> 修改密码
+        </li>
+    </ul>
+</div>
+<div class="page-content">
+    <div class="page-content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="editPassword" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 col-md-offset-2 control-label">原始密码</label>
+                        <div class="col-md-5">
+                            <input name="origin" type="password" class="form-control" placeholder="原始密码" data-bv-notempty="true" data-bv-notempty-message="密码不能为空" data-bv-stringlength="true" data-bv-stringlength-min="6" data-bv-stringlength-max="20" data-bv-stringlength-message="密码长度在6-20">
+                            <small id="origin" class="help-block" style="display:none">原始密码不正确</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label col-md-offset-2">新密码</label>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" name="new" placeholder="新密码" data-bv-notempty="true" data-bv-notempty-message="密码不能为空" data-bv-stringlength="true" data-bv-stringlength-min="6" data-bv-stringlength-max="20" data-bv-stringlength-message="密码长度在6-20" data-bv-identical="true" data-bv-identical-field="confirm" data-bv-identical-message="两次输入密码不一致">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label col-md-offset-2">确认密码</label>
+                        <div class="col-md-5">
+                            <input name="confirm" type="password" class="form-control" data-bv-identical="true" data-bv-identical-field="new" data-bv-identical-message="两次输入密码不一致">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-5 col-md-offset-5">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#editPassword").each(function () {
+        var $form = $(this);
+        $form.bootstrapValidator().on('success.form.bv', function (e) {
+            // 阻止默认事件提交
+            e.preventDefault();
+        });
+        $("#editPassword").on('submit', function () {
+            if ($("input[name='origin']").val() !== user.obja.password) {
+                $("#origin").css("display", "block");
+                $("input[name='origin']").parent().parent().removeClass("has-success").addClass("has-error");
+                return false;
+            } else {
+                $("#origin").css("display", "none");
+                $("input[name='origin']").parent().parent().removeClass("has-error").addClass("has-success");
+                $.post("dataGrid!f41DatagridSave.action", {
+                    json: JSON.stringify(lyg.serializeObjectAll($("#editInfo")))
+                }, function (data) {
+                    alert(data + "操作成功");
+                });
+            }
+        });
+    });
+</script>

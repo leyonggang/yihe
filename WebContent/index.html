@@ -8,9 +8,8 @@
     <meta name="description" content="益和热力">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- basic styles -->
-    <script type="text/javascript"
-	src="http://api.map.baidu.com/api?v=2.0&ak=GXkbjcszaqwT3Wqq7piaAEeu"></script>
-	
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=GXkbjcszaqwT3Wqq7piaAEeu"></script>
+
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
 
@@ -25,7 +24,7 @@
 		<link rel="stylesheet" href="css/cyrillic.css">
 -->
     <!-- ace styles -->
-<link rel="stylesheet" type="text/css" href="highchart/js/css/highcharts.css" />
+    <link rel="stylesheet" type="text/css" href="highchart/js/css/highcharts.css" />
     <link rel="stylesheet" href="css/ace.min.css">
     <link rel="stylesheet" href="css/ace-rtl.min.css">
     <link rel="stylesheet" href="css/ace-skins.min.css">
@@ -57,6 +56,10 @@
         .fixed-table-container thead th .th-inner {
             white-space: normal;
         }
+
+        #nav-left-list {
+            display: none;
+        }
     </style>
 </head>
 
@@ -83,12 +86,10 @@
             <div class="navbar-header pull-right" role="navigation">
 
                 <ul class="nav ace-nav">
-                    <li class="light-blue" style="height: 50px">
+                    <li class="light-blue" style="height:50px">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo" src="images/user.jpg" alt="Jason's Photo">
-                            <span class="user-info">
-									<small>欢迎光临,</small>
-									Jason
+                            <span id="userInfo" class="user-info">
 								</span>
 
                             <i class="icon-caret-down"></i>
@@ -370,11 +371,11 @@
     <script src="js/bootstrap-table-select2-filter.min.js"></script>
     <script src="js/bootstrap-datepicker.min.js"></script>
     <script src="js/bootstrap-datepicker.zh-CN.min.js"></script>
-    
+
     <script src="highchart/js/highcharts.js"></script>
-	
-	<script src="highchart/js/modules/exporting.js"></script>
-    
+
+    <script src="highchart/js/modules/exporting.js"></script>
+
     <script src="js/common.js"></script>
     <script>
         var user;
@@ -387,7 +388,8 @@
                         });
                 }
             });
-            $.get("dataGrid!userInfo.action", function (data) {
+            //dataGrid!userInfo.action
+            $.get("login.json", function (data) {
                 if (data["obja"] == null) {
                     window.location = "login.html";
                 } else {
@@ -411,16 +413,18 @@
                             }
                         }
                     }
-                                        $(list).each(function () {
-                                            if ($(this).attr("data-fid") !== "true") {
-                                                $(this).remove();
-                                            }
-                                        });
-                                        $navLeftUl.each(function(){
-                                           if($(this).children("li").length===0){
-                                             $(this).parent().remove();
-                                           }
-                                        });
+                    $(list).each(function () {
+                        if ($(this).attr("data-fid") !== "true") {
+                            $(this).remove();
+                        }
+                    });
+                    $navLeftUl.each(function () {
+                        if ($(this).children("li").length === 0) {
+                            $(this).parent().remove();
+                        }
+                    });
+                    $("#userInfo").html("<small>欢迎光临，</small>" + user.obja.name);
+                    $("#nav-left-list").css("display", "block");
                 }
             }, "json");
             //dataGrid!userInfo.action
