@@ -55,9 +55,11 @@
             white-space: normal;
         }
 
+/*
         #nav-left-list {
             display: none;
         }
+*/
     </style>
 </head>
 
@@ -430,7 +432,6 @@
                     $("#nav-left-list").css("display", "block");
                 }
             }, "json");
-            //dataGrid!userInfo.action
             $("#signOut").on("click", function () {
                 $.get("dataGrid!logout.action", function (data) {
                     if (data["mes"] === "suc") window.location = "login.html";

@@ -6,57 +6,56 @@
     </ul>
 </div>
 <script type="text/javascript">
-$(function() {
-	$('#date').datepicker({
-		format : 'yyyy-mm-dd',
-		weekStart : 1,
-		autoclose : true,
-		todayBtn : 'linked',
-		language : 'zh-CN'
-	});
-	var date = new Date();
-	$('#date').datepicker('setDate', date);
-	$('#table').bootstrapTable({
-        method: "get",
-        dataType: "json",
-        url: "",
-        queryParams: {
-            json: lyg.jsonToString({
-                year: "2016",
-                compqtype: user.obja.dept.name
-            })
-        },
-        search: false,
-        pagination: true
+    $(function () {
+        $('#date').datepicker({
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            autoclose: true,
+            todayBtn: 'linked',
+            language: 'zh-CN'
+        });
+        var date = new Date();
+        $('#date').datepicker('setDate', date);
+        $('#table').bootstrapTable({
+            method: "get",
+            dataType: "json",
+            url: "",
+            queryParams: {
+                json: lyg.jsonToString({
+                    year: "2016",
+                    compqtype: user.obja.dept.name
+                })
+            },
+            toolbar: "#toolbar",
+            search: false,
+            pagination: true
+        });
     });
-});
-
-
 </script>
-
-<div style="padding-left: 5px;margin:20px auto 0px; width: 1000px;">
-	<form id="condition">
-		<table>
-			<tr>
-				<td width="100px" style="text-align: right;">日期：</td>
-				<td width="60px"><input type="text" class="span9" id="date"
-					name="date"></td>
-			</tr>
-		</table>
-	</form>
-</div>
-<div style="margin: 0 auto; width: 1000px; border: 0px solid;padding: 0px;;">
-<table id="table" style="position: absolute;top:-150px;left:0px;">
-         <thead>
-             <tr>
-                 <th data-checkbox="true"></th>
-                 <th data-field="HOUSECODE">日期</th>
-                 <th data-field="HOUSECODE">维修工</th>
-                 <th data-field="COMPQTYPE">片区</th>
-                 <th data-field="COMMUNITYCODE">房间编号</th>
-                 <th data-field="JC_STATUS">稽查信息</th>
-                 <th data-field="BOLTSTATUS">开关检状态</th>
-             </tr>
-         </thead>
-  </table>
+<div class="page-content">
+    <div class="page-content-area">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="toolbar">
+                    <form id="condition">
+                        <label>日期：</label>
+                        <input type="text" id="date" name="date">
+                    </form>
+                </div>
+                <table id="table">
+                    <thead>
+                        <tr>
+                            <th data-checkbox="true"></th>
+                            <th data-field="HOUSECODE">日期</th>
+                            <th data-field="HOUSECODE">维修工</th>
+                            <th data-field="COMPQTYPE">片区</th>
+                            <th data-field="COMMUNITYCODE">房间编号</th>
+                            <th data-field="JC_STATUS">稽查信息</th>
+                            <th data-field="BOLTSTATUS">开关检状态</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
