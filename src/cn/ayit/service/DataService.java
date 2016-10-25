@@ -23,8 +23,8 @@ public interface DataService {
 	
 	//f13 开关栓与稽查
 	public List<Map<String, Object>> f13Datagrid(Date date);
-	public void f13JcSave(String account, String jc);
-	public void f13KgSave(String account, String kg);
+	public void f13JcSave(String account, String jc, String jcResult, String houseCode, String address);
+	public void f13KgSave(String account, String kg,String houseCode, String address);
 	
 	
 	//维修，巡线人员列表

@@ -76,10 +76,6 @@
                                 <label class="col-md-2 col-md-offset-2 control-label">功能</label>
                                 <div class="col-md-5">
                                     <select id="funs" name="funIds" data-placeholder="请选择功能" multiple class="form-control select-add-fun">
-                                      <option value="1">信息查询</option>
-                                      <option value="2">维修人员调度</option>
-                                      <option value="3">自动抄表信息</option>
-                                      <option value="4">系统管理</option>
                                     </select>
                                 </div>
                             </div>
@@ -142,10 +138,6 @@
                                 <label class="col-md-2 col-md-offset-2 control-label">功能</label>
                                 <div class="col-md-5">
                                     <select id="editFuns" name="funIds" data-placeholder="请选择功能" multiple class="form-control select-edit-fun">
-                                      <option value="1">信息查询</option>
-                                      <option value="2">维修人员调度</option>
-                                      <option value="3">自动抄表信息</option>
-                                      <option value="4">系统管理</option>
                                     </select>
                                 </div>
                             </div>
@@ -226,19 +218,17 @@
             if (confirm("你确定要删除吗？")) {
                 var param="";
                 var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-                    param=param+"&arrya="+row.did;
+                    param=param+"&arrya="+row.account;
                     return row.account;
                 });
+                console.log(param);
                 $.get("dataGrid!f41DatagridDelete.action?"+param.substring(1),null,function(data){
-            		//console.log(data.mes);
+                	$table.bootstrapTable('remove', {
+                        field: 'account',
+                        values: ids
+                    });
             	},"json");
-                $table.bootstrapTable('remove', {
-                    field: 'account',
-                    values: ids
-                });
-                 $.post("dataGrid!f41DatagridDelete.action",ids,function(data){
-                	alert(data+"操作成功");
-                },"json");
+                
             }
         });
         $("#addUser").each(function () {

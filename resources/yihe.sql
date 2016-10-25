@@ -31,9 +31,9 @@ insert into yihe_meta_dept(name,type) values('灯塔路片区',1);
 insert into yihe_meta_dept(name,type) values('地源热泵',1);
 
 select * from yihe_meta_user
-
+update yihe_meta_user set password='4ca4238a0b923820' where account='t1'
 insert into yihe_meta_user(account,did,name,password,phone,type) values('t1',1,'测试帐号1','4ca4238a0b923820','110',1);
-insert into yihe_meta_user(account,did,name,password,phone,type) values('t2',1,'测试帐号2','4ca4238a0b923820','110',1);
+insert into yihe_meta_user(account,did,name,password,phone,type) values('admin',1,'超级管理员','4ca4238a0b923820','110',0);
 insert into yihe_meta_user(account,did,name,password,phone,type) values('t3',2,'测试帐号3','4ca4238a0b923820','110',1);
 insert into yihe_meta_user(account,did,name,password,phone,type) values('赵洋',1,'赵洋','4ca4238a0b923820','110',1);
 update yihe_meta_user set password='4ca4238a0b923820' where account='t1'
@@ -48,7 +48,7 @@ insert into yihe_meta_function(fid,name,pfid,type) values(4,'系统管理',null,
 insert into yihe_meta_function(fid,name,pfid,type) values(11,'用户基本情况',1,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(12,'管网监测数据',1,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(13,'开关栓与稽查',1,2);
-insert into yihe_meta_function(fid,name,pfid,type) values(21,'维修调度管理',2,2);
+
 insert into yihe_meta_function(fid,name,pfid,type) values(22,'维修定位',2,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(23,'巡线轨迹',2,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(24,'维修信息',2,2);
@@ -58,9 +58,9 @@ insert into yihe_meta_function(fid,name,pfid,type) values(26,'维修报表(人�
 insert into yihe_meta_function(fid,name,pfid,type) values(31,'日报表',3,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(32,'月报表',3,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(41,'用户管理',4,2);
-insert into yihe_meta_function(fid,name,pfid,type) values(42,'部门管理',4,2);
-insert into yihe_meta_function(fid,name,pfid,type) values(43,'功能管理',4,2);
-insert into yihe_meta_function(fid,name,pfid,type) values(44,'设置',4,2);
+insert into yihe_meta_function(fid,name,pfid,type) values(42,'部门管理',4,3);
+insert into yihe_meta_function(fid,name,pfid,type) values(43,'功能管理',4,3);
+
 
 
 select * from yihe_map_user_function
@@ -74,6 +74,7 @@ insert into yihe_map_user_function(account,fid)values('t1',23);
 insert into yihe_map_user_function(account,fid)values('赵洋',11);
 insert into yihe_map_user_function(account,fid)values('赵洋',12);
 insert into yihe_map_user_function(account,fid)values('赵洋',13);
+insert into yihe_map_user_function(account,fid)values('赵洋',22);
 insert into yihe_map_user_function(account,fid)values('赵洋',23);
 insert into yihe_map_user_function(account,fid)values('赵洋',24);
 insert into yihe_map_user_function(account,fid)values('赵洋',25);
@@ -82,7 +83,24 @@ insert into yihe_map_user_function(account,fid)values('赵洋',41);
 insert into yihe_map_user_function(account,fid)values('赵洋',42);
 insert into yihe_map_user_function(account,fid)values('赵洋',43);
 
-delete from yihe_meta_codetag where tid=2
+
+insert into yihe_map_user_function(account,fid)values('admin',11);
+insert into yihe_map_user_function(account,fid)values('admin',12);
+insert into yihe_map_user_function(account,fid)values('admin',13);
+insert into yihe_map_user_function(account,fid)values('admin',22);
+insert into yihe_map_user_function(account,fid)values('admin',23);
+insert into yihe_map_user_function(account,fid)values('admin',24);
+insert into yihe_map_user_function(account,fid)values('admin',25);
+insert into yihe_map_user_function(account,fid)values('admin',26);
+insert into yihe_map_user_function(account,fid)values('admin',41);
+insert into yihe_map_user_function(account,fid)values('admin',42);
+insert into yihe_map_user_function(account,fid)values('admin',43);
+
+
+select * from yihe_meta_codetag 
+
+
+delete from yihe_meta_codetag where tid=4
 select * from yihe_meta_codetag where date_format(`date`,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d');
 select now() from yihe_meta_codetag 
 

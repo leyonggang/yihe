@@ -19,15 +19,12 @@
         $('#table').bootstrapTable({
             method: "get",
             dataType: "json",
-            url: "",
+            url: "outPrint!f13Datagrid.action",
             queryParams: {
-                json: lyg.jsonToString({
-                    year: "2016",
-                    compqtype: user.obja.dept.name
-                })
+                datea:lyg.getDate
             },
             toolbar: "#toolbar",
-            search: false,
+            search: true,
             pagination: true
         });
     });
@@ -46,12 +43,14 @@
                     <thead>
                         <tr>
                             <th data-checkbox="true"></th>
-                            <th data-field="HOUSECODE">日期</th>
-                            <th data-field="HOUSECODE">维修工</th>
-                            <th data-field="COMPQTYPE">片区</th>
-                            <th data-field="COMMUNITYCODE">房间编号</th>
-                            <th data-field="JC_STATUS">稽查信息</th>
-                            <th data-field="BOLTSTATUS">开关检状态</th>
+                            <th data-field="date">日期</th>
+                            <th data-field="name">维修工</th>
+                            <th data-field="dname">片区</th>
+                            <th data-field="houseCode">房间编号</th>
+                            <th data-field="address">地址</th>
+                            <th data-field="jc">稽查信息</th>
+                            <th data-field="jcResult">稽查结果</th>
+                            <th data-field="kg">开关检状态</th>
                         </tr>
                     </thead>
                 </table>

@@ -29,8 +29,11 @@ public class CodeTag implements java.io.Serializable {
 	private int tid;
 	private Date date;
 	private User user;
+	private String houseCode;
+	private String address;
 	private String kg;//开关栓
 	private String jc;//稽查
+	private String jcResult;//稽查结果
 
 
 	public CodeTag() {
@@ -84,6 +87,32 @@ public class CodeTag implements java.io.Serializable {
 	public void setJc(String jc) {
 		this.jc = jc;
 	}
+	@Column(name = "houseCode")
+	public String getHouseCode() {
+		return houseCode;
+	}
+
+	public void setHouseCode(String houseCode) {
+		this.houseCode = houseCode;
+	}
+	@Column(name = "address")
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	@Column(name = "jcResult")
+	public String getJcResult() {
+		return jcResult;
+	}
+
+	public void setJcResult(String jcResult) {
+		this.jcResult = jcResult;
+	}
+	
+	
 
 
 }

@@ -160,7 +160,7 @@ public class DataGridAction extends ActionSupport {
 
 	public String f13JcSave() throws Exception {
 		try {
-			dataService.f13JcSave(stra,strb);
+			dataService.f13JcSave(stra,strb,filter,strc,strd);
 			mes="suc";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -169,9 +169,10 @@ public class DataGridAction extends ActionSupport {
 		return SUCCESS;	
 	}
 	
+	
 	public String f13KgSave() throws Exception {
 		try {
-			dataService.f13KgSave(stra,strb);
+			dataService.f13KgSave(stra,strb,strc,strd);
 			mes="suc";
 		} catch (Exception e) {
 			e.printStackTrace();

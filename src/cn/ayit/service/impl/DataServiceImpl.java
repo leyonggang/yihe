@@ -133,6 +133,9 @@ public class DataServiceImpl implements DataService{
 				"date_format(c.date,'%Y-%m-%d %h:%i:%s') as date," +
 				"u.name as name," +
 				"d.name as dname," +
+				"c.houseCode as houseCode," +
+				"c.address as address," +
+				"c.jcResult as jcResult," +
 				"c.jc as jc," +
 				"c.kg as kg) " +
 			"from CodeTag c "
@@ -143,24 +146,29 @@ public class DataServiceImpl implements DataService{
 
 	@Transactional
 	@Override
-	public void f13JcSave(String account, String jc) {
+	public void f13JcSave(String account, String jc, String jcResult, String houseCode, String address) {
 		User user=baseDao.getById(User.class,account);
 		CodeTag codeTag=new CodeTag();
 		codeTag.setDate(new Date());
 		codeTag.setJc(jc);
+		codeTag.setJcResult(jcResult);
 		codeTag.setUser(user);
+		codeTag.setAddress(address);
+		codeTag.setHouseCode(houseCode);
 		baseDao.save(codeTag);
 		
 	}
 
 	@Transactional
 	@Override
-	public void f13KgSave(String account, String kg) {
+	public void f13KgSave(String account, String kg, String houseCode, String address) {
 		User user=baseDao.getById(User.class,account);
 		CodeTag codeTag=new CodeTag();
 		codeTag.setDate(new Date());
 		codeTag.setKg(kg);
 		codeTag.setUser(user);
+		codeTag.setAddress(address);
+		codeTag.setHouseCode(houseCode);
 		baseDao.save(codeTag);
 		
 	}
@@ -174,7 +182,7 @@ public class DataServiceImpl implements DataService{
 				"d.name as dname," +
 				"u.name as name," +
 				"u.phone as phone) " +
-			"from User u left join u.dept d";
+			"from User u left join u.dept d where u.type=1";
 		List<Map<String, Object>> d=baseDao.query(hql);
 		for (Map<String, Object> map : d) {
 			User user=baseDao.getById(User.class,map.get("account").toString());
@@ -215,7 +223,6 @@ public class DataServiceImpl implements DataService{
 	@Transactional
 	@Override
 	public void f41DatagridDelete(String[] accounts) {
-
 		for (String account : accounts) {
 			baseDao.deleteById(User.class, account);
 		}

@@ -21,8 +21,8 @@ http://localhost:8080/yihe/outPrint!f12Datagrid.action?stra=%E5%BC%80%E5%8F%91%E
 
 开关栓与与稽查f13
 http://localhost:8080/yihe/outPrint!f13Datagrid.action?datea=2016-10-25
-http://localhost:8080/yihe/dataGrid!f13JcSave.action?stra=赵洋&strb=已稽查
-http://localhost:8080/yihe/dataGrid!f13KgSave.action?stra=赵洋&strb=已下达开栓命令
+http://localhost:8080/yihe/dataGrid!f13JcSave.action?stra=t4&strb=正常用热&filter=未处理&strc=4035-001-04-04-02&strd=鲁园社区阳光园1-4-4西
+http://localhost:8080/yihe/dataGrid!f13KgSave.action?stra=t4&strb=已开栓&strc=4035-001-04-04-02&strd=鲁园社区阳光园1-4-4西
 
 维修、巡线人员数据
 http://localhost:8080/yihe/outPrint!findWeixiu.action
