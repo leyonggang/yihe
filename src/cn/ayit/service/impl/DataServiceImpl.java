@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import cn.ayit.dao.BaseDao;
+import cn.ayit.domain.CodeTag;
 import cn.ayit.domain.Dept;
 import cn.ayit.domain.Function;
 import cn.ayit.domain.User;
@@ -115,13 +117,52 @@ public class DataServiceImpl implements DataService{
 	
 	@Override
 	public Map<String, Object> f11DataRb(String meterserialno) {
-		String sql="select commandtime,userid,meterserialno,flow,totalflow,totalheat,FEADWATERTEMPERATURE,RETURNWATERTEMPERATURE,warning,userstatus "
-				+ "from rms.yhrl_record t where meterserialno=? and rownum=1 order by commandtime desc";
+		String sql="select * from (select commandtime,userid,meterserialno,flow,totalflow,totalheat,FEADWATERTEMPERATURE,RETURNWATERTEMPERATURE,warning,userstatus "
+				+ "from rms.yhrl_record t where meterserialno=? order by commandtime desc) where rownum=1";
 		try {
 			return  simpleRb.queryForMap(sql, "1111"+meterserialno);
 		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
 			return null;
 		}
+	}
+	
+
+	@Override
+	public List<Map<String, Object>> f13Datagrid(Date date) {
+		String hql="select new map(" +
+				"date_format(c.date,'%Y-%m-%d %h:%i:%s') as date," +
+				"u.name as name," +
+				"d.name as dname," +
+				"c.jc as jc," +
+				"c.kg as kg) " +
+			"from CodeTag c "
+			+ "left join c.user u "
+			+ "left join u.dept d where date_format(c.date,'%Y-%m-%d')=date_format(?,'%Y-%m-%d')";
+		return baseDao.query(hql, new java.sql.Date(date.getTime()));
+	}
+
+	@Transactional
+	@Override
+	public void f13JcSave(String account, String jc) {
+		User user=baseDao.getById(User.class,account);
+		CodeTag codeTag=new CodeTag();
+		codeTag.setDate(new Date());
+		codeTag.setJc(jc);
+		codeTag.setUser(user);
+		baseDao.save(codeTag);
+		
+	}
+
+	@Transactional
+	@Override
+	public void f13KgSave(String account, String kg) {
+		User user=baseDao.getById(User.class,account);
+		CodeTag codeTag=new CodeTag();
+		codeTag.setDate(new Date());
+		codeTag.setKg(kg);
+		codeTag.setUser(user);
+		baseDao.save(codeTag);
+		
 	}
 	
 	@Override
@@ -285,6 +326,7 @@ public class DataServiceImpl implements DataService{
 		List<ComboBox> funs=baseDao.queryBySql(sql, ComboBox.class);
 		return funs;
 	}
+
 	
 	
 

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Controller;
 import cn.ayit.domain.data.ComboBox;
 import cn.ayit.dao.BaseDao;
 import cn.ayit.service.DataService;
+import cn.ayit.utils.JsonUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
@@ -81,6 +83,14 @@ public class OutPrintAction extends ActionSupport implements Preparable{
          }
          reader.close();
          connection.disconnect();
+		return null;
+	}
+	
+	public String f13Datagrid() throws Exception {
+		List<Map<String, Object>> es=dataService.f13Datagrid(datea);
+		System.out.println(es);
+		JSONArray jsonarray=JSONArray.fromObject(es);
+		out.print(jsonarray);
 		return null;
 	}
 	

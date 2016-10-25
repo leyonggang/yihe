@@ -14,11 +14,15 @@ http://localhost:8080/yihe/dataGrid!getComboBoxDepts.action
 用户数据查询f11
 http://localhost:8080/yihe/dataGrid!f11Datagrid.action?json={year:"2016",compqtype:"平原路片区",ownername:"肖玉霞"}
 热表数据
-http://localhost:8080/yihe/dataGrid!f11DataRb.action?stra=11110062101002
+http://localhost:8080/yihe/dataGrid!f11DataRb.action?stra=0062101002
 
 管网数据查询f12
 http://localhost:8080/yihe/outPrint!f12Datagrid.action?stra=%E5%BC%80%E5%8F%91%E5%8C%BA
 
+开关栓与与稽查f13
+http://localhost:8080/yihe/outPrint!f13Datagrid.action?datea=2016-10-25
+http://localhost:8080/yihe/dataGrid!f13JcSave.action?stra=赵洋&strb=已稽查
+http://localhost:8080/yihe/dataGrid!f13KgSave.action?stra=赵洋&strb=已下达开栓命令
 
 维修、巡线人员数据
 http://localhost:8080/yihe/outPrint!findWeixiu.action

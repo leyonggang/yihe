@@ -116,7 +116,6 @@ public class DataGridAction extends ActionSupport {
 	
 	public String userInfo() throws Exception {
 		obja=ServletActionContext.getRequest().getSession().getAttribute("user");
-		System.out.println(obja);
 		mes="suc";
 		return SUCCESS;
 	}
@@ -159,6 +158,28 @@ public class DataGridAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String f13JcSave() throws Exception {
+		try {
+			dataService.f13JcSave(stra,strb);
+			mes="suc";
+		} catch (Exception e) {
+			e.printStackTrace();
+			mes=e.getMessage();return SUCCESS;
+		}
+		return SUCCESS;	
+	}
+	
+	public String f13KgSave() throws Exception {
+		try {
+			dataService.f13KgSave(stra,strb);
+			mes="suc";
+		} catch (Exception e) {
+			e.printStackTrace();
+			mes=e.getMessage();return SUCCESS;
+		}
+		return SUCCESS;	
+	}
+	
 	
 	public String f41Datagrid() throws Exception {
 		List<Map<String, Object>> es=dataService.f41Datagrid(filter);

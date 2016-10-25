@@ -81,6 +81,11 @@ insert into yihe_map_user_function(account,fid)values('赵洋',26);
 insert into yihe_map_user_function(account,fid)values('赵洋',41);
 insert into yihe_map_user_function(account,fid)values('赵洋',42);
 insert into yihe_map_user_function(account,fid)values('赵洋',43);
+
+delete from yihe_meta_codetag where tid=2
+select * from yihe_meta_codetag where date_format(`date`,'%Y-%m-%d')=date_format(now(),'%Y-%m-%d');
+select now() from yihe_meta_codetag 
+
 select * from location;
 update location set account='赵洋';
 insert into location(account,) values

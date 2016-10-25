@@ -1,5 +1,6 @@
 package cn.ayit.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +21,10 @@ public interface DataService {
 	public long f11DatagridCount(Map<String, Object> map);
 	public Map<String, Object> f11DataRb(String meterserialno);
 	
+	//f13 开关栓与稽查
+	public List<Map<String, Object>> f13Datagrid(Date date);
+	public void f13JcSave(String account, String jc);
+	public void f13KgSave(String account, String kg);
 	
 	
 	//维修，巡线人员列表
@@ -49,6 +54,7 @@ public interface DataService {
 	public List<ComboBox> getComboBoxFunctions();
 	public List<ComboBox> getComboBoxDepts();
 	public List<ComboBox> getComboBoxFunctionsLevel1();
+	
 	
 	
 	
