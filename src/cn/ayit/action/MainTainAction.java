@@ -1,5 +1,6 @@
 package cn.ayit.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,111 @@ public class MainTainAction extends BaseAction{
 		}
 		return SUCCESS;
 	}
+	
+	public String mainTainReportCommunityDetails(){
+		dataMap.clear();
+		String communityName = this.getRequest().getParameter("communityName");
+		String  beginDate = this.getRequest().getParameter("beginDate");
+		String endDate = this.getRequest().getParameter("endDate");
+		String type = this.getRequest().getParameter("type");
+		
+		
+		try{
+			List<MainTain> ls = this.mainTainService.findMainTainCommunity(communityName, beginDate, endDate);
+			List<MainTain> details = findDetails(ls, type);
+			dataMap.put("msg", "1");
+			dataMap.put("details", details);			
+		}catch (Exception e) {
+			e.printStackTrace();
+			dataMap.put("msg", e.getMessage());
+		}
+		
+		
+		
+		return SUCCESS;
+				
+	}
+	
+	public String mainTainReportWorkerDetails(){
+		dataMap.clear();
+		String workerName = this.getRequest().getParameter("workerName");
+		String  beginDate = this.getRequest().getParameter("beginDate");
+		String endDate = this.getRequest().getParameter("endDate");
+		String type = this.getRequest().getParameter("type");
+
+		
+		try{
+			List<MainTain> ls = this.mainTainService.findMainTainWorker(workerName, beginDate, endDate);
+			List<MainTain> details = findDetails(ls, type);
+			dataMap.put("msg", "1");
+			dataMap.put("details", details);			
+		}catch (Exception e) {
+			e.printStackTrace();
+			dataMap.put("msg", e.getMessage());
+		}
+		return SUCCESS;
+	}
+	private List<MainTain> findDetails(List<MainTain> ls,String type){
+		List<MainTain> details = new ArrayList<MainTain>();
+
+		if("1".equals(type)){
+			
+			dataMap.put("detail", ls);
+			
+		}else if("2".equals(type)){
+			for(MainTain mainTain : ls){
+				if(mainTain.getM_DEALRESULT().equals("待处理")){
+					details.add(mainTain);
+				}
+			}
+		}else if("3".equals(type)){
+			for(MainTain mainTain : ls){
+				if(mainTain.getM_DEALRESULT().equals("已延时")){
+					details.add(mainTain);
+				}
+			}
+		}else if("4".equals(type)){
+			for(MainTain mainTain : ls){
+				if(mainTain.getM_DEALRESULT().equals("咨询归档")){
+					details.add(mainTain);
+				}
+			}
+		}else if("5".equals(type)){
+			for(MainTain mainTain : ls){
+				if(mainTain.getM_DEALRESULT().equals("处理完毕")){
+					details.add(mainTain);
+				}
+			}
+		}else if("6".equals(type)){
+			for(MainTain mainTain : ls){
+				if(mainTain.getM_backManner().equals("满意")){
+				details.add(mainTain);
+			}
+			}
+			
+		}else if("7".equals(type)){
+			for(MainTain mainTain : ls){
+				if(mainTain.getM_backManner().equals("不满意")){
+					details.add(mainTain);
+				}
+			}
+		}else if("8".equals(type)){
+			for(MainTain mainTain : ls){
+				if(mainTain.getM_backQuality().equals("问题解决")){
+					details.add(mainTain);
+				}
+			}
+		}else if("9".equals(type)){
+			for(MainTain mainTain : ls){
+				if(mainTain.getM_backQuality().equals("问题有遗留")){
+					details.add(mainTain);
+				}
+			}
+		}
+		
+		return details;
+	}
+	
 	
 	@Autowired
 	private MainTainService mainTainService;

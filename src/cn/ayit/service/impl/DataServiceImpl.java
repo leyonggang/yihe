@@ -40,6 +40,9 @@ public class DataServiceImpl implements DataService{
 	@Resource(name="simpleJdbcTemplateRb")
 	SimpleJdbcTemplate simpleRb;
 	
+	@Resource(name="simpleJdbcTemplateYihe")
+	SimpleJdbcTemplate simpleJdbcTemplateYihe;
+	
 	
 	@Transactional
 	@Override
@@ -52,7 +55,7 @@ public class DataServiceImpl implements DataService{
 	
 	@Override
 	public List<Map<String, Object>> findWeixiu(String string) {
-		String hql="select new map(" +
+		/*String hql="select new map(" +
 				"u.account as account," +
 				"d.did as did," +
 				"d.name as dname," +
@@ -60,21 +63,16 @@ public class DataServiceImpl implements DataService{
 				"u.phone as phone) " +
 			"from User u left join u.dept d "
 			+ "inner join u.functions f where f.fid=?";
-		return baseDao.query(hql,22);
+		return baseDao.query(hql,22);*/
 		
-		/*String sql="select u.account as account,d.did as did,d.name as dname,u.name as uname,u.phone as phone from yihe_meta_user u ,yihe_meta_dept d ,yihe_map_user_function m  where u.did=d.did and u.account=m.account and m.fid=? and u.type=1  and exists( select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))";
-		return baseDao.queryBySqlForMap(sql, 22);*/
+		String sql="select u.account as account,d.did as did,d.name as dname,u.name as name,u.phone as phone from yihe_meta_user u ,yihe_meta_dept d ,yihe_map_user_function m  where u.did=d.did and u.account=m.account and m.fid=? and u.type=1  and exists( select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))";
+		return simpleJdbcTemplateYihe.queryForList(sql, 22);
 	}
 
 	@Override
 	public List<Map<String, Object>> findXunxian(String string) {
-		String sql="select u.account,d.did,d.name as dname,u.name,u.phone from yihe_meta_user u left join yihe_meta_dept d on u.did=d.did "
-				+ "left join yihe_map_user_function m on u.account=m.account "
-				+ "where u.type=1 and exists( "
-				+ "select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( "
-				+ "select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))"
-				+ " and m.fid=?";
-		return baseDao.queryBySqlForMap(sql, 23);
+		String sql="select u.account as account,d.did as did,d.name as dname,u.name as name,u.phone as phone from yihe_meta_user u ,yihe_meta_dept d ,yihe_map_user_function m  where u.did=d.did and u.account=m.account and m.fid=? and u.type=1  and exists( select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))";
+		return simpleJdbcTemplateYihe.queryForList(sql, 23);
 	}
 	
 	@Transactional	

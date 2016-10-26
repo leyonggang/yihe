@@ -25,6 +25,9 @@
 		<property name="username" value="root"></property>
 		<property name="password" value="root"></property>
 	</bean>
+	<bean id="simpleJdbcTemplateYihe" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
 	<bean id="rBDataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName"
