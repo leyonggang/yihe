@@ -13,20 +13,20 @@
                     <div class="form-group">
                         <label class="col-md-2 col-md-offset-2 control-label">原始密码</label>
                         <div class="col-md-5">
-                            <input name="origin" type="password" class="form-control" placeholder="原始密码" data-bv-notempty="true" data-bv-notempty-message="密码不能为空" data-bv-stringlength="true" data-bv-stringlength-min="6" data-bv-stringlength-max="20" data-bv-stringlength-message="密码长度在6-20">
+                            <input id="origin11" name="origin" type="password" class="form-control" placeholder="原始密码" data-bv-notempty="true" data-bv-notempty-message="密码不能为空" data-bv-stringlength="true" data-bv-stringlength-min="1" data-bv-stringlength-max="20" data-bv-stringlength-message="密码长度在1-20">
                             <small id="origin" class="help-block" style="display:none">原始密码不正确</small>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label col-md-offset-2">新密码</label>
                         <div class="col-md-5">
-                            <input type="password" class="form-control" name="new" placeholder="新密码" data-bv-notempty="true" data-bv-notempty-message="密码不能为空" data-bv-stringlength="true" data-bv-stringlength-min="6" data-bv-stringlength-max="20" data-bv-stringlength-message="密码长度在6-20" data-bv-identical="true" data-bv-identical-field="confirm" data-bv-identical-message="两次输入密码不一致">
+                            <input id="new1" type="password" class="form-control" name="new" placeholder="新密码" data-bv-notempty="true" data-bv-notempty-message="密码不能为空" data-bv-stringlength="true" data-bv-stringlength-min="1" data-bv-stringlength-max="20" data-bv-stringlength-message="密码长度在1-20" data-bv-identical="true" data-bv-identical-field="confirm" data-bv-identical-message="两次输入密码不一致">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label col-md-offset-2">确认密码</label>
                         <div class="col-md-5">
-                            <input name="confirm" type="password" class="form-control" data-bv-identical="true" data-bv-identical-field="new" data-bv-identical-message="两次输入密码不一致">
+                            <input id="new2" name="confirm" type="password" class="form-control" data-bv-identical="true" data-bv-identical-field="new" data-bv-identical-message="两次输入密码不一致">
                         </div>
                     </div>
                     <div class="form-group">
@@ -48,7 +48,19 @@
             e.preventDefault();
         });
         $("#editPassword").on('submit', function () {
-            if ($("input[name='origin']").val() !== user.obja.password) {
+        	$.post("dataGrid!f00PasswordSave.action", 
+        			{stra:user.obja.account,strb:$("#origin11").val(),strc:$("#new1").val()},
+        			function(data){
+        				if(data.mes=='原密码错误'){
+        					$("#origin").css("display", "block");
+         	                $("input[name='origin']").parent().parent().removeClass("has-success").addClass("has-error");
+        				}else if(data.mes=='suc'){
+        					alert("修改成功");
+        					window.location="index.html";
+        				}
+        			},"json");
+        	
+            /* if ($("input[name='origin']").val() !== user.obja.password) {
                 $("#origin").css("display", "block");
                 $("input[name='origin']").parent().parent().removeClass("has-success").addClass("has-error");
                 return false;
@@ -60,7 +72,7 @@
                 }, function (data) {
                     alert(data + "操作成功");
                 });
-            }
+            } */
         });
     });
 </script>

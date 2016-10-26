@@ -32,9 +32,9 @@ insert into yihe_meta_dept(name,type) values('地源热泵',1);
 
 select * from yihe_meta_user
 update yihe_meta_user set password='4ca4238a0b923820' where account='t1'
+update yihe_meta_user set did=1 where account='赵洋'
 insert into yihe_meta_user(account,did,name,password,phone,type) values('t1',1,'测试帐号1','4ca4238a0b923820','110',1);
 insert into yihe_meta_user(account,did,name,password,phone,type) values('admin',1,'超级管理员','4ca4238a0b923820','110',0);
-insert into yihe_meta_user(account,did,name,password,phone,type) values('t3',2,'测试帐号3','4ca4238a0b923820','110',1);
 insert into yihe_meta_user(account,did,name,password,phone,type) values('赵洋',1,'赵洋','4ca4238a0b923820','110',1);
 update yihe_meta_user set password='4ca4238a0b923820' where account='t1'
 
@@ -64,12 +64,13 @@ insert into yihe_meta_function(fid,name,pfid,type) values(43,'功能管理',4,3)
 
 
 select * from yihe_map_user_function
-delete from  yihe_map_user_function where account='赵洋' and fid=23
+delete from  yihe_map_user_function where account='admin' and fid=43
 insert into yihe_map_user_function(account,fid)values('t1',1);
 insert into yihe_map_user_function(account,fid)values('t1',2);
 insert into yihe_map_user_function(account,fid)values('t1',4);
 insert into yihe_map_user_function(account,fid)values('t1',11);
 insert into yihe_map_user_function(account,fid)values('t1',12);
+insert into yihe_map_user_function(account,fid)values('t1',13);
 insert into yihe_map_user_function(account,fid)values('t1',23);
 insert into yihe_map_user_function(account,fid)values('赵洋',11);
 insert into yihe_map_user_function(account,fid)values('赵洋',12);
@@ -80,18 +81,11 @@ insert into yihe_map_user_function(account,fid)values('赵洋',24);
 insert into yihe_map_user_function(account,fid)values('赵洋',25);
 insert into yihe_map_user_function(account,fid)values('赵洋',26);
 insert into yihe_map_user_function(account,fid)values('赵洋',41);
+
+
 insert into yihe_map_user_function(account,fid)values('赵洋',42);
 insert into yihe_map_user_function(account,fid)values('赵洋',43);
 
-
-insert into yihe_map_user_function(account,fid)values('admin',11);
-insert into yihe_map_user_function(account,fid)values('admin',12);
-insert into yihe_map_user_function(account,fid)values('admin',13);
-insert into yihe_map_user_function(account,fid)values('admin',22);
-insert into yihe_map_user_function(account,fid)values('admin',23);
-insert into yihe_map_user_function(account,fid)values('admin',24);
-insert into yihe_map_user_function(account,fid)values('admin',25);
-insert into yihe_map_user_function(account,fid)values('admin',26);
 insert into yihe_map_user_function(account,fid)values('admin',41);
 insert into yihe_map_user_function(account,fid)values('admin',42);
 insert into yihe_map_user_function(account,fid)values('admin',43);
@@ -126,4 +120,11 @@ VALUES ('2016-10-15','11:43:40',114.21,36.06,'赵洋'),
 
 select * from location
 
-select * from rms.yhrl_record t ;--抄表记录
+select u.account,d.did,d.name dname,u.name,u.phone from yihe_meta_user u left join yihe_meta_dept d on u.did=d.did 
+				left join yihe_map_user_function m on u.account=m.account 
+				where u.type=1 and exists( 
+				select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( 
+				select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))
+				 and m.fid=22
+
+

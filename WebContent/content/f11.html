@@ -14,26 +14,30 @@
                         <div class="form-group">
                             <label>年份：</label>
                             <select name="year" id="year">
-                                <option value="2008">2008</option>
-                                <option value="2009">2009</option>
-                                <option value="2010">2010</option>
-                                <option value="2011">2011</option>
-                                <option value="2012">2012</option>
-                                <option value="2013">2013</option>
-                                <option value="2014">2014</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
-                            </select>
+                             <option value="2016">2016</option>
+                             <option value="2015">2015</option>
+                             <option value="2014">2014</option>
+                             <option value="2013">2013</option>
+                             <option value="2012">2012</option>
+                             <option value="2011">2011</option>
+                             <option value="2010">2010</option>
+                             <option value="2009">2009</option>
+                             <option value="2008">2008</option>
+ 							</select>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <label>片区：</label>
+                                <label>&nbsp;&nbsp;片区：</label>
                                 <select id="dept">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>姓名：</label>
+                            <label>&nbsp;&nbsp;小区名称：</label>
+                            <input id="communityname" type="text" class="form-control" placeholder="小区名称">
+                        </div>
+                        <div class="form-group">
+                            <label>&nbsp;&nbsp;姓名：</label>
                             <input id="ownername" type="text" class="form-control" placeholder="姓名">
                         </div>
                         <button id="search" type="button" class="btn btn-default">查询</button>
@@ -68,10 +72,12 @@
             var year = $("#year").val();
             var ownername = $("#ownername").val();
             var compqtype = $("#dept").val();
+            var communityname=$("#communityname").val();
             var op = {
                 year: year,
                 compqtype: compqtype,
-                ownername: ownername
+                ownername: ownername,
+                communityname : communityname
             };
             $('#table').bootstrapTable("refresh", {
                 query: {

@@ -76,9 +76,9 @@ public class DataGridAction extends ActionSupport {
 	public String login() throws Exception {
 		int r=dataService.login(stra, strb);
 		if(r==1){
-			mes="suc";
 			obja=dataService.getUserInfo(stra);
 			ServletActionContext.getRequest().getSession().setAttribute("user", obja);
+			mes="suc";
 		} else if(r==2){
 			mes="用户不存在";
 		} else {
@@ -96,21 +96,6 @@ public class DataGridAction extends ActionSupport {
 			e.printStackTrace();
 			mes=e.getMessage();
 		}
-		
-		
-		return SUCCESS;
-	}
-	
-	public String setPassword() throws Exception {
-		try {
-			dataService.setPassword(stra,strb);
-			mes="suc";
-		} catch (Exception e) {
-			e.printStackTrace();
-			mes=e.getMessage();
-		}
-		
-		
 		return SUCCESS;
 	}
 	
@@ -142,6 +127,36 @@ public class DataGridAction extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	public String f00PasswordSave() throws Exception {
+		try {
+			int r=dataService.login(stra, strb);
+			if(r==1){
+				dataService.setPassword(stra,strc);
+				mes="suc";
+			}else mes="原密码错误";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mes=e.getMessage();return SUCCESS;
+		}
+		return SUCCESS;	
+	}
+	
+	public String f01InfoSave() throws Exception {
+		try {
+			JSONObject jsonObj=JSONObject.fromObject(json);
+	       	Map<String, Object> map=(Map) JSONObject.toBean(jsonObj, Map.class);
+			dataService.f01InfoSave(map);
+			obja=dataService.getUserInfo(stra);
+			ServletActionContext.getRequest().getSession().setAttribute("user", obja);
+			mes="suc";
+		} catch (Exception e) {
+			e.printStackTrace();
+			mes=e.getMessage();return SUCCESS;
+		}
+		return SUCCESS;	
+	}
+	
 	
 	public String f11Datagrid() throws Exception {
 		JSONObject jsonObj=JSONObject.fromObject(json);
@@ -154,7 +169,11 @@ public class DataGridAction extends ActionSupport {
 	
 	public String f11DataRb() throws Exception {
 		Map<String, Object> es=dataService.f11DataRb(stra);
-		if(es!=null)obja=es;mes="suc";
+		if(es!=null){
+			obja=es;mes="suc";	
+		}else{
+			mes="热表厂商未提供数据";	
+		}
 		return SUCCESS;
 	}
 
@@ -179,13 +198,6 @@ public class DataGridAction extends ActionSupport {
 			mes=e.getMessage();return SUCCESS;
 		}
 		return SUCCESS;	
-	}
-	
-	
-	public String f41Datagrid() throws Exception {
-		List<Map<String, Object>> es=dataService.f41Datagrid(filter);
-		if(es!=null)objs=es;mes="suc";
-		return SUCCESS;
 	}
 	
 	

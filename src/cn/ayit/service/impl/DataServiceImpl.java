@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +52,7 @@ public class DataServiceImpl implements DataService{
 	
 	@Override
 	public List<Map<String, Object>> findWeixiu(String string) {
-		String hql="select new map(" +
+		/*String hql="select new map(" +
 				"u.account as account," +
 				"d.did as did," +
 				"d.name as dname," +
@@ -59,20 +60,39 @@ public class DataServiceImpl implements DataService{
 				"u.phone as phone) " +
 			"from User u left join u.dept d "
 			+ "inner join u.functions f where f.fid=?";
-		return baseDao.query(hql,22);
+		return baseDao.query(hql,22);*/
+		
+		String sql="select u.account,d.did,d.name as dname,u.name,u.phone from yihe_meta_user u left join yihe_meta_dept d on u.did=d.did "
+				+ "left join yihe_map_user_function m on u.account=m.account "
+				+ "where u.type=1 and exists( "
+				+ "select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( "
+				+ "select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))"
+				+ " and m.fid=?";
+		return baseDao.queryBySqlForMap(sql, 22);
 	}
 
 	@Override
 	public List<Map<String, Object>> findXunxian(String string) {
-		String hql="select new map(" +
-				"u.account as account," +
-				"d.did as did," +
-				"d.name as dname," +
-				"u.name as name," +
-				"u.phone as phone) " +
-			"from User u left join u.dept d "
-			+ " inner join u.functions f where f.fid=?";
-		return baseDao.query(hql,23);
+		String sql="select u.account,d.did,d.name as dname,u.name,u.phone from yihe_meta_user u left join yihe_meta_dept d on u.did=d.did "
+				+ "left join yihe_map_user_function m on u.account=m.account "
+				+ "where u.type=1 and exists( "
+				+ "select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( "
+				+ "select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))"
+				+ " and m.fid=?";
+		return baseDao.queryBySqlForMap(sql, 23);
+	}
+	
+	@Transactional	
+	@Override
+	public void f01InfoSave(Map<String, Object> map) {
+		User user=baseDao.getById(User.class,map.get("account").toString());
+		
+		user.setName(map.get("name").toString());
+		user.setPhone(map.get("phone").toString());
+		user.setType(1);
+		
+		baseDao.saveOrUpdate(user);
+		
 	}
 	
 	@Override
@@ -84,11 +104,11 @@ public class DataServiceImpl implements DataService{
 		String buildNo=map.get("buildNo")==null?"%":"%"+map.get("buildNo").toString()+"%";
 		String unitNo=map.get("unitNo")==null?"%":"%"+map.get("unitNo").toString()+"%";
 		String floorNo=map.get("floorNo")==null?"%":"%"+map.get("floorNo").toString()+"%";
-		
+		if(compqtype.equals("管理部门"))return null;
 		String sql="select  substr(housecode,6,3) buildNo,substr(housecode,10,2) unitNo,substr(housecode,13,2) floorNo, "
 				+ "housecode, compqtype, communitycode, communityname, sy_bh, buildingname, ownername, address, contactphone,  "
-				+ "combuildarea, sf_status, jc_status, dt_value, boltstatus, chargemonth  "
-				+ "from view_qiyeapp "
+				+ "combuildarea, sf_status, nvl(t.tag_a,jc_status) jc_status, dt_value, nvl(t.tag_c,boltstatus) boltstatus, chargemonth  "
+				+ "from view_qiyeapp q left join yihe_code_tag t on substr(q.chargemonth,1,4)=t.year and q.housecode=t.code "
 				+ "where substr(chargemonth,1,4)=? "
 				+ "and compqtype like ? and communityname like ?  "
 				+ "and ownername like ? and substr(housecode,6,3) like ?  "
@@ -105,7 +125,7 @@ public class DataServiceImpl implements DataService{
 		String buildNo=map.get("buildNo")==null?"%":"%"+map.get("buildNo").toString()+"%";
 		String unitNo=map.get("unitNo")==null?"%":"%"+map.get("unitNo").toString()+"%";
 		String floorNo=map.get("floorNo")==null?"%":"%"+map.get("floorNo").toString()+"%";
-		
+		if(compqtype.equals("管理部门"))return 0;
 		String sql="select  count(*)  "
 				+ "from view_qiyeapp "
 				+ "where substr(chargemonth,1,4)=? "
@@ -140,13 +160,15 @@ public class DataServiceImpl implements DataService{
 				"c.kg as kg) " +
 			"from CodeTag c "
 			+ "left join c.user u "
-			+ "left join u.dept d where date_format(c.date,'%Y-%m-%d')=date_format(?,'%Y-%m-%d')";
+			+ "left join u.dept d where date_format(c.date,'%Y-%m-%d')=date_format(?,'%Y-%m-%d') "
+			+ "order by c.date desc";
 		return baseDao.query(hql, new java.sql.Date(date.getTime()));
 	}
 
 	@Transactional
 	@Override
 	public void f13JcSave(String account, String jc, String jcResult, String houseCode, String address) {
+		Calendar cal = Calendar.getInstance();
 		User user=baseDao.getById(User.class,account);
 		CodeTag codeTag=new CodeTag();
 		codeTag.setDate(new Date());
@@ -156,6 +178,19 @@ public class DataServiceImpl implements DataService{
 		codeTag.setAddress(address);
 		codeTag.setHouseCode(houseCode);
 		baseDao.save(codeTag);
+		
+		String tyear=String.valueOf(cal.get(Calendar.YEAR));
+		String sql="select  count(*)  "
+				+ "from yihe_code_tag "
+				+ "where substr(year,1,4)=? "
+				+ "and code=? ";
+		long i= simple.queryForLong(sql,tyear,houseCode);
+		if(i==0){
+			sql="insert into yihe_code_tag(tag_a, tag_b,year, code) values(?,?,?,?)";
+		}else {
+			sql="update yihe_code_tag set tag_a=?,tag_b=? where year=? and code=?";
+		}
+		simple.update(sql, jc,jcResult,tyear,houseCode);
 		
 	}
 
@@ -170,6 +205,19 @@ public class DataServiceImpl implements DataService{
 		codeTag.setAddress(address);
 		codeTag.setHouseCode(houseCode);
 		baseDao.save(codeTag);
+		
+		String tyear=String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+		String sql="select  count(*)  "
+				+ "from yihe_code_tag "
+				+ "where substr(year,1,4)=? "
+				+ "and code=? ";
+		long i= simple.queryForLong(sql,tyear,houseCode);
+		if(i==0){
+			sql="insert into yihe_code_tag(tag_c, year, code) values(?,?,?)";
+		}else {
+			sql="update yihe_code_tag set tag_c=? where year=? and code=?";
+		}
+		simple.update(sql, kg,tyear,houseCode);
 		
 	}
 	
@@ -204,10 +252,14 @@ public class DataServiceImpl implements DataService{
 	public void f41DatagridSave(Map<String, Object> map) {
 			User user=baseDao.getById(User.class,map.get("account").toString());
 			Dept dept=baseDao.getById(Dept.class,Integer.parseInt(map.get("dept").toString()));
-			if(user==null){user=new User();user.setAccount(map.get("account").toString());}
+			if(user==null){
+				user=new User();
+				user.setAccount(map.get("account").toString());
+				user.setPassword(MD5Util.md5(map.get("password").toString()));
+			}
 			user.setName(map.get("name").toString());
-			user.setPassword(MD5Util.md5(map.get("password").toString()));
 			user.setPhone(map.get("phone").toString());
+			user.setType(1);
 			List<String> s=CommonUtil.StringToList(map.get("funIds").toString());
 			Set<Function> funs=new HashSet<>();
 			for (String string : s) {
@@ -234,7 +286,8 @@ public class DataServiceImpl implements DataService{
 	public List<Map<String, Object>> f42Datagrid(String filter) {
 		String hql="select new map("+
 				"did as did," +
-				"name as dname) " +
+				"name as dname,"
+				+ "gwname as gwname) " +
 			"from Dept";
 		return baseDao.query(hql);
 	}
@@ -247,6 +300,7 @@ public class DataServiceImpl implements DataService{
 		if(map.get("did")==null){dept=new Dept();}else
 		dept=baseDao.getById(Dept.class,Integer.parseInt(map.get("did").toString()));
 		dept.setName(map.get("dname").toString());
+		dept.setGwname(map.get("gwname").toString());
 		baseDao.saveOrUpdate(dept);
 		return null;
 	}

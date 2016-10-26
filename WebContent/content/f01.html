@@ -87,8 +87,10 @@ $(function(){
         });
     $("#editInfo").submit(function () {
             if ($('#editInfo').data('bootstrapValidator').isValid()) {
-               $.post("dataGrid!f41DatagridSave.action",{json:JSON.stringify(lyg.serializeObjectAll($("#editInfo")))},function(data){
-                   alert(data+"操作成功");
+               $.post("dataGrid!f01InfoSave.action",{stra:user.obja.account,json:JSON.stringify(lyg.serializeObjectAll($("#editInfo")))},function(data){
+                   if(data.mes=='suc'){
+                	   alert("操作成功");window.location="index.html";}
+               		else alert("操作错误"+data.mes);
                });
                 return false;
             } else

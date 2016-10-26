@@ -16,6 +16,9 @@ public interface DataService {
 	public Object getUserInfo(String username);
 	public void setPassword(String username, String password);
 	
+	//f01个人资料修改
+	public void f01InfoSave(Map<String, Object> map);
+	
 	//f11用户信息数据查询
 	public List<Map<String, Object>> f11Datagrid(Map<String, Object> map);
 	public long f11DatagridCount(Map<String, Object> map);
@@ -54,6 +57,7 @@ public interface DataService {
 	public List<ComboBox> getComboBoxFunctions();
 	public List<ComboBox> getComboBoxDepts();
 	public List<ComboBox> getComboBoxFunctionsLevel1();
+	
 	
 	
 	

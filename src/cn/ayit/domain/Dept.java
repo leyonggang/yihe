@@ -27,6 +27,7 @@ public class Dept implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer did;
 	private String name;//名称
+	private String gwname;//管网名称
 	private Integer type;//类型
 	
 	public Dept() {
@@ -61,6 +62,15 @@ public class Dept implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(name = "gwname", length = 100)
+	public String getGwname() {
+		return gwname;
+	}
+
+	public void setGwname(String gwname) {
+		this.gwname = gwname;
 	}
 
 	
