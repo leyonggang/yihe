@@ -117,13 +117,14 @@ public class OutPrintAction extends ActionSupport implements Preparable{
 	
 	public String findXunxian() throws Exception {
 		List<Map<String, Object>> es=dataService.findXunxian("");
-		System.out.println(es);
+		
 		JSONArray jsonarray=JSONArray.fromObject(es);
 		out.print(jsonarray);
 		return null;
 	}
 	public String findWeixiu() throws Exception {
 		List<Map<String, Object>> es=dataService.findWeixiu("");
+		System.out.println(es);
 		JSONArray jsonarray=JSONArray.fromObject(es);
 		out.print(jsonarray);
 		return null;

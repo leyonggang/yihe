@@ -151,6 +151,7 @@
 </div>
 <script>
     $(function () {
+    	$(".select-edit-fun,.select-add-fun").chosen();
         $('#add').on('show.bs.modal', function (e) {
               $(this).find("input").val("");
         });
@@ -294,7 +295,7 @@
             $("select[name='select-edit-fun']").trigger("chosen:updated");
         }
         
-        $(".select-edit-fun,.select-add-fun").chosen();
+        
         $("#editUser,#addUser").find('.chosen-container').each(function(){
            $(this).css("width","100%"); 
         });

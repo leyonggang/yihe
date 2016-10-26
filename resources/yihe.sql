@@ -126,5 +126,5 @@ select u.account,d.did,d.name dname,u.name,u.phone from yihe_meta_user u left jo
 				select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( 
 				select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))
 				 and m.fid=22
-
+select u.account as account,d.did as did,d.name as dname,u.name as name,u.phone as phone from yihe_meta_user u ,yihe_meta_dept d ,yihe_map_user_function m  where u.did=d.did and u.account=m.account and m.fid=? and u.type=1  and exists( select * from yihe_meta_function f2 where (fid=22 or fid=23) and not exists( select * from yihe_map_user_function m2 where m2.account=u.account and m2.fid=f2.fid ))
 
