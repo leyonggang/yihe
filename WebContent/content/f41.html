@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-2 control-label">功能</label>
                                 <div class="col-md-5">
-                                    <select id="funs" name="funIds" data-placeholder="请选择功能" multiple class="form-control select-add-fun">
+                                    <select id="funs" name="funAdd" data-placeholder="请选择功能" multiple class="form-control select-add-fun">
                                     </select>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-2 control-label">功能</label>
                                 <div class="col-md-5">
-                                    <select id="editFuns" name="funIds" data-placeholder="请选择功能" multiple class="form-control select-edit-fun">
+                                    <select id="editFuns" name="funEidt" data-placeholder="请选择功能" multiple class="form-control select-edit-fun">
                                     </select>
                                 </div>
                             </div>
@@ -286,12 +286,10 @@
             $("input[name='account']").val(row.account);
             $("input[name='password']").val(row.password);
             $("input[name='name']").val(row.name);
-            $("select[name='dept']").val(row.did);
-            $("input[name='phone']").val(row.phone);
-            $("select[id='editFuns']").val(row.funIds);
-            $("select[name='select-edit-dname'] option[value='"+row.dname+"']").attr("selected",true);
-            $("select[name='funIds']").val(row.funIds);
-            $("select[name='funIds']").trigger("chosen:updated");
+            $("select[name='dept']").val(row.did);//$("select[name='dept'] option[value='"+row.dname+"']").attr("selected",true);    
+            $("input[name='phone']").val(row.phone);            
+            $("#editFuns").val(row.funNames);
+            $("#editFuns").trigger("chosen:updated");
         }
 
         $("#editUser,#addUser").find('.chosen-container').each(function(){

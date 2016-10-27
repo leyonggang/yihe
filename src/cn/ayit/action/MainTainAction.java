@@ -166,9 +166,9 @@ public class MainTainAction extends BaseAction{
 		List<MainTain> details = new ArrayList<MainTain>();
 
 		if("1".equals(type)){
-			
-			dataMap.put("detail", ls);
-			
+			for(MainTain mainTain : ls){				
+					details.add(mainTain);			
+			}			
 		}else if("2".equals(type)){
 			for(MainTain mainTain : ls){
 				if(mainTain.getM_DEALRESULT().equals("待处理")){

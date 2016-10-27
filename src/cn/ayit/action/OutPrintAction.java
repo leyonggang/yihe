@@ -72,7 +72,8 @@ public class OutPrintAction extends ActionSupport implements Preparable{
 	
 	
 	public String f12Datagrid() throws Exception {
-		String getURL ="http://10.10.24.226:8888/ForGongXueYuan/ForGongXueYuan.aspx?type=HRZ&PQ="+URLEncoder.encode(stra,"utf-8");
+		//10.10.24.226
+		String getURL ="http://112.53.100.152:8888/ForGongXueYuan/ForGongXueYuan.aspx?type=HRZ&PQ="+URLEncoder.encode(stra,"utf-8");
 		URL getUrl = new URL(getURL);
 		HttpURLConnection connection = (HttpURLConnection) getUrl.openConnection();
 		connection.connect();
