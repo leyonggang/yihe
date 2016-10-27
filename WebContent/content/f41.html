@@ -1,12 +1,11 @@
 <div class="breadcrumbs">
-   <ul class="breadcrumb">
-    <li>
-        <i class="glyphicon glyphicon-user"></i>
-        用户管理
-    </li>
+    <ul class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-user"></i> 用户管理
+        </li>
     </ul>
 </div>
-   <div class="page-content">
+<div class="page-content">
     <div class="page-content-area">
         <div class="row">
             <div class="col-md-12">
@@ -75,7 +74,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-2 control-label">功能</label>
                                 <div class="col-md-5">
-                                    <select id="funs" name="funAdd" data-placeholder="请选择功能" multiple class="form-control select-add-fun">
+                                    <select id="funs" name="funIds" data-placeholder="请选择功能" multiple class="form-control select-add-fun">
                                     </select>
                                 </div>
                             </div>
@@ -131,7 +130,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-2 control-label">功能</label>
                                 <div class="col-md-5">
-                                    <select id="editFuns" name="funEidt" data-placeholder="请选择功能" multiple class="form-control select-edit-fun">
+                                    <select id="editFuns" name="funIds" data-placeholder="请选择功能" multiple class="form-control select-edit-fun">
                                     </select>
                                 </div>
                             </div>
@@ -152,75 +151,76 @@
 <script>
     $(function () {
         $('#add').on('show.bs.modal', function (e) {
-              $(this).find("input").val("");
+            $(this).find("input").val("");
         });
-    	var $table = $('#table'),
-        $remove = $('#remove');
-        	 var options = {
-        	            method: "get",
-        	            dataType: "json",
-        	            url:"outPrint!f41Datagrid.action",
-        	            columns: [{
-        	                    checkbox: true
+        //outPrint!f41Datagrid.action
+        var $table = $('#table'),
+            $remove = $('#remove');
+        var options = {
+            method: "get",
+            dataType: "json",
+            url: "41data.json",
+            columns: [{
+                    checkbox: true
         	            },
-        	                {
-        	                    field: "account",
-        	                    title: "用户名",
-        	                    filter: {
-        	                        type: "input"
-        	                    }
+                {
+                    field: "account",
+                    title: "用户名",
+                    filter: {
+                        type: "input"
+                    }
         	                },
-        	                {
-        	                    field: "name",
-        	                    title: "姓名",
-        	                    filter: {
-        	                        type: "select",
-        	                        data: ["后期加"]
-        	                    }
+                {
+                    field: "name",
+                    title: "姓名",
+                    filter: {
+                        type: "select",
+                        data: ["后期加"]
+                    }
         	                },
-        	                {
-        	                    field: "dname",
-        	                    title: "部门",
-        	                    filter: {
-        	                        type: "input"
-        	                    }
+                {
+                    field: "dname",
+                    title: "部门",
+                    filter: {
+                        type: "input"
+                    }
         	                },
-        	                {
-        	                    field: "phone",
-        	                    title: "电话",
-        	                    filter: {
-        	                        type: "input"
-        	                    }
+                {
+                    field: "phone",
+                    title: "电话",
+                    filter: {
+                        type: "input"
+                    }
         	                },
-        	                {
-        	                    field: "funNames",
-        	                    title: "功能",
-        	                    filter: {
-        	                        type: "input"
-        	                    }
+                {
+                    field: "funNames",
+                    title: "功能",
+                    filter: {
+                        type: "input"
+                    }
         	                }],
-        	            filter: false,
-        	            search: true,
-        	            toolbar: "#toolbar",
-        	            pagination: true,
-        	            onDblClickRow: onDblClickRow
-        	        };
+            filter: false,
+            search: true,
+            toolbar: "#toolbar",
+            pagination: true,
+            onDblClickRow: onDblClickRow
+        };
         $table.bootstrapTable(options);
-        	
+
         $remove.click(function () {
             if (confirm("你确定要删除吗？")) {
-                var param="";
+                var param = "";
                 var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-                    param=param+"&arrya="+row.account;
+                    param = param + "&arrya=" + row.account;
                     return row.account;
                 });
-                $.get("dataGrid!f41DatagridDelete.action?"+param.substring(1),null,function(data){
-                	$table.bootstrapTable('remove', {
+                $.get("dataGrid!f41DatagridDelete.action?" + param.substring(1), null, function (data) {
+                    $table.bootstrapTable('remove', {
                         field: 'account',
                         values: ids
                     });
-            	},"json");
-                
+                }, "json");
+
             }
         });
         $("#addUser").each(function () {
@@ -240,14 +240,14 @@
         /*增加用户表单提交*/
         $('#addUser').submit(function () {
             if ($('#addUser').data('bootstrapValidator').isValid()) {
-                sendRequest("#addUser","dataGrid!f41DatagridSave.action");
+                sendRequest("#addUser", "dataGrid!f41DatagridSave.action");
                 return false;
             } else return false;
         });
         /*编辑用户表单提交*/
         $("#editUser").submit(function () {
             if ($('#editUser').data('bootstrapValidator').isValid()) {
-                sendRequest("#editUser","dataGrid!f41DatagridSave.action");
+                sendRequest("#editUser", "dataGrid!f41DatagridSave.action");
                 return false;
             } else
                 return false;
@@ -269,11 +269,13 @@
             }
         });
         /*提交数据*/
-        function sendRequest(formId,action) {
-            $.post(action,{json:JSON.stringify(lyg.serializeObjectAll($(formId)))},function(data){
-            	$('#add').add("#edit").modal('hide');
+        function sendRequest(formId, action) {
+            $.post(action, {
+                json: JSON.stringify(lyg.serializeObjectAll($(formId)))
+            }, function (data) {
+                $('#add').add("#edit").modal('hide');
                 $('#table').bootstrapTable("refresh");
-            },"json");
+            }, "json");
         }
         /*当某行被双击时*/
         function onDblClickRow(row) {
@@ -281,22 +283,21 @@
             getValue(row);
         }
         /*将数据放到编辑表单里*/
-            $(".select-edit-fun,.select-add-fun").chosen();
         function getValue(row) {
             $("input[name='account']").val(row.account);
             $("input[name='password']").val(row.password);
             $("input[name='name']").val(row.name);
-            $("select[name='dept']").val(row.did);//$("select[name='dept'] option[value='"+row.dname+"']").attr("selected",true);    
-            $("input[name='phone']").val(row.phone);            
-            $("#editFuns").val(row.funNames);
+            $("select[name='dept']").val(row.did);
+            $("input[name='phone']").val(row.phone);
+            for (var i = 0; i < row.funIds.length; i++) {
+                $("#editFuns option[value='" + row.funIds[i] + "']").attr("selected", true);
+            }
             $("#editFuns").trigger("chosen:updated");
         }
+        $(".select-edit-fun,.select-add-fun").chosen();
 
-        $("#editUser,#addUser").find('.chosen-container').each(function(){
-           $(this).css("width","100%"); 
-        });
-        $("select[name='select-edit-fun']").on("change",function(){
-            console.log($(this).val());
+        $("#editUser,#addUser").find('.chosen-container').each(function () {
+            $(this).css("width", "100%");
         });
         $.get("dataGrid!getComboBoxDepts.action", function (data) {
             var $options;
@@ -308,7 +309,7 @@
         $.get("dataGrid!getComboBoxFunctions.action", function (data) {
             var $options;
             for (var i = 0; i < data.lista.length; i++) {
-                $options = $("<option value='" + data.lista[i].value + "'-->" + data.lista[i].text + "</option>")
+                $options = $("<option value='" + data.lista[i].value + "'>--" + data.lista[i].text + "</option>")
                 $("#funs,#editFuns").append($options);
                 $("#funs,#editFuns").trigger("chosen:updated");
             }
