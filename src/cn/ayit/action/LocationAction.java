@@ -27,10 +27,11 @@ public class LocationAction extends BaseAction implements ModelDriven<Location> 
 		dataMap.clear();
 		try {
 			Date now = new Date();
-			java.sql.Date today = new java.sql.Date(now.getTime());
-			java.sql.Time time = new java.sql.Time(now.getTime());
-			location.setLocationDate(today);
-			location.setLocationTime(time);
+			//java.sql.Date today = new java.sql.Date(now.getTime());
+			//java.sql.Time time = new java.sql.Time(now.getTime());
+			//location.setLocationDate(today);
+			//location.setLocationTime(time);
+			location.setLocationTime(now);
 			this.locationService.addLocation(location);
 			dataMap.put("msg", "1");
 		} catch (Exception e) {
@@ -45,27 +46,41 @@ public class LocationAction extends BaseAction implements ModelDriven<Location> 
 		dataMap.clear();
 
 		String account = this.getRequest().getParameter("account");
-		String todayStr = this.getRequest().getParameter("date");
+		String beginTimeStr = this.getRequest().getParameter("beginTime");
+		String endTimeStr = this.getRequest().getParameter("endTime");
+		
+		System.out.println(account+"=="+beginTimeStr+"=="+endTimeStr);
+	
 		if (account == null || account.equals("")) {
 			dataMap.put("msg", "用户编码为空！");
+			return SUCCESS;
 		}
-		Date todayDate = null;
-		if (todayStr == null || todayStr.equals("")) {
-			todayDate = new Date(new java.util.Date().getTime());
-		} else {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-			try {
-				todayDate = sdf.parse(todayStr);
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
+		
+		if(beginTimeStr==null ||beginTimeStr.equals("")){
+			dataMap.put("msg", "开始时间不能为空！");
+			return SUCCESS;
+		}
+		
+		if(endTimeStr==null || endTimeStr.equals("")){
+			dataMap.put("msg", "截止时间不能为空！");
+			return SUCCESS;
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date beginTime = null;
+		Date endTime = null;
+		
+		try {
+			beginTime = sdf.parse(beginTimeStr);
+			endTime = sdf.parse(endTimeStr);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		dataMap.clear();
 		try {
-			List<Location> ls = this.locationService.findLocation(account,
-					new java.sql.Date(todayDate.getTime()));
+			List<Location> ls = this.locationService.findLocation(account,beginTime,endTime);
 			dataMap.put("msg", "1");
 			dataMap.put("ls", ls);
 		} catch (Exception e) {

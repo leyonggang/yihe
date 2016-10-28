@@ -38,7 +38,7 @@
 				map.centerAndZoom(new BMap.Point(Longitude, Latitude), 16);
 				map.enableScrollWheelZoom(true);
 				var point = new BMap.Point(Longitude, Latitude);
-				var label = new BMap.Label(location.locationDate+" "+location.locationTime, {
+				var label = new BMap.Label(location.locationTime, {
 					offset : new BMap.Size(-20, -20)
 				});
 				var marker1 = new BMap.Marker(point); // 创建标注  

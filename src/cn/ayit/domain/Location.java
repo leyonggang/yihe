@@ -1,9 +1,7 @@
 package cn.ayit.domain;
 
-import java.sql.Date;
 import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,10 +19,12 @@ public class Location {
 	private int id;
 	@Column
 	private String account;
+	//@Column
+	//private Date locationDate;
+	//@Column
+	//private Time LocationTime;
 	@Column
-	private Date locationDate;
-	@Column
-	private Time LocationTime;
+	private Date locationTime;
 	@Column
 	private double longitude;
 	@Column
@@ -50,7 +50,7 @@ public class Location {
 		this.account = account;
 	}
 
-	@JSON(format="yyyy-MM-dd")
+	/*@JSON(format="yyyy-MM-dd")
 	public Date getLocationDate() {
 		return locationDate;
 	}
@@ -66,12 +66,20 @@ public class Location {
 
 	public void setLocationTime(Time locationTime) {
 		LocationTime = locationTime;
+	}*/
+	
+	@JSON(format="yyyy-MM-dd HH:mm:ss")
+	public Date getLocationTime() {
+		return locationTime;
 	}
 
+	public void setLocationTime(Date locationTime) {
+		this.locationTime = locationTime;
+	}
+	
 	public double getLongitude() {
 		return longitude;
 	}
-
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
@@ -90,14 +98,6 @@ public class Location {
 
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
-
-	public static void main(String[] args0) {
-		java.util.Date now = new java.util.Date();
-		Location location = new Location();
-		Time t = new Time(now.getTime());
-		location.setLocationTime(t);
-		System.out.println(location.getLocationTime());
 	}
 
 }

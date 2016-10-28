@@ -60,7 +60,7 @@
 		   	            //filter: true,
 		   	            //search: false,
 		   	            //pagination: true,
-		   	            onDblClickRow: onDblClickRow
+		   	            onClickRow: onClickRow
 		   	        };
 		   	 
 		   		$("#worker").bootstrapTable(options);
@@ -68,7 +68,7 @@
 
 	});
 	
-	function onDblClickRow(row) {
+	function onClickRow(row) {
 	    //showMap(row.account);
 	    //alert(1);
 	    var src="mapLastLocation.jsp?account="+row.account;

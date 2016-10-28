@@ -10,13 +10,15 @@
 	src="http://api.map.baidu.com/api?v=2.0&ak=GXkbjcszaqwT3Wqq7piaAEeu"></script>
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript">
-	$(function() {
+	$(function() {	
 		$
 				.ajax({
 					url : "locationFind.action",
 					data : {
 						account : "${param.account}",
-						date : "${param.date}"
+						date : "${param.date}",
+						beginTime:"${param.beginTime}",
+						endTime:"${param.endTime}"
 					},
 					success : function(dataMap) {
 						if (dataMap.msg != "1") {

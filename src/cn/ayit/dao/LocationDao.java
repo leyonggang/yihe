@@ -1,6 +1,6 @@
 package cn.ayit.dao;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -19,12 +19,14 @@ public class LocationDao extends HibernateDao{
 		session.save(location);
 	}
 	
-	public List<Location> selectLocation(String account, Date today){
+	public List<Location> selectLocation(String account, Date beginTime,Date endTime){
 	    Session session = this.getSessionFactory().getCurrentSession();
-	    Query query = session.createQuery("from Location l where l.locationDate=? and l.account=?");
-	    query.setDate(0, today);
-	    query.setString(1, account);
+	    Query query = session.createQuery("from Location l where l.account=? and l.locationTime>? and l.locationTime<?");
+	    query.setString(0, account);
+	    query.setTimestamp(1,beginTime);
+	    query.setTimestamp(2, endTime);
 	    List<Location> ls = query.list();
+	    System.out.println("ls.size==="+ls.size());
 	    return ls;
 	}
 	

@@ -1,6 +1,6 @@
 package cn.ayit.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ public class LocationService {
 	}
 	
 	@Transactional
-	public List<Location> findLocation(String account,Date today){
-		List<Location> ls = locationDao.selectLocation(account, today);
+	public List<Location> findLocation(String account,Date beginTime,Date endTime){
+		List<Location> ls = locationDao.selectLocation(account, beginTime,endTime);
 		return ls;
 	}
 	@Transactional

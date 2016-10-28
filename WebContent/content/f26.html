@@ -1,7 +1,7 @@
 <div class="breadcrumbs">
     <ul class="breadcrumb">
         <li>
-            <i class="glyphicon glyphicon-search"></i> 维修报表(人员)
+            <i class="glyphicon glyphicon-search"></i> 维修统计(维修员工)
         </li>
     </ul>
 </div>
@@ -27,12 +27,75 @@ $(function() {
 		language : 'zh-CN'
 	});
 	var date = new Date();
-	$('#endDate').datepicker('setDate', date)
+	$('#endDate').datepicker('setDate', date);
+	
+	$.ajax({
+		url : "mainTainReportWorkerDetails.action",
+		data : $('#condition').serialize(),
+		success : function(dataMap) {
+			var options = {
+					method : "get",
+					dataType : "json",
+					data : dataMap.ls,
+					columns : [ {
+						checkbox : true
+					}, {
+						field : "m_code",
+						title : "维修单号"
+					}, {
+						field : "m_HANDTYPE",
+						title : "维修类型"
+					}, {
+						field : "m_DEALOPERATOR",
+						title : "维修工姓名"
+					}, {
+						field : "m_DISPATCHTIME",
+						title : "派单时间"
+					}, {
+						field : "m_DEALTIME",
+						title : "工单处理时间"
+					}, {
+						field : "m_ADDRESS",
+						title : "用户地址"
+					}, {
+						field : "m_LINKMAN",
+						title : "用户名称"
+					}, {
+						field : "m_DISPATCHCONTENT",
+						title : "派单内容"
+					}, {
+						field : "m_DEALCONTENT",
+						title : "处理内容"
+					},
+
+					{
+						field : "m_DEALRESULT",
+						title : "处理结果"
+					},
+
+					{
+						field : "m_backtime",
+						title : "处回访时间"
+					}, {
+						field : "m_backManner",
+						title : "服务态度"
+					}, {
+						field : "m_backQuality",
+						title : "服务质量"
+					} ],
+				//filter : true,
+				//search : true,
+				//toolbar : "#toolbar",
+				pagination : true
+			};
+			$("#details").bootstrapTable(options);
+		}
+	});
+	
 });
 
 
-	function statistic() {
-		$(function() {
+	function statistic() {		
 			$
 					.ajax({
 						url : "mainTainReportWorker.action",
@@ -52,23 +115,22 @@ $(function() {
 									+ $("#endDate").val());
 
 							var info = $("#info");
-							info.text("");// 清空数据
+							info.text("");
 							var orderReport = dataMap.orderReport;
-							//alert(orderReport.orderCount);					 
 							info.append("<p>派单情况： " + orderReport.orderCount
-									+ " 个</p>");
+									+ " 个<a href='javascript:void()' onclick='loadDetails(1)'>详细</a></p>");
 							info.append("<p>工单状态： 待处理 "
-									+ orderReport.processCount + " 个，已延时  "
-									+ orderReport.delayCount + " 个，咨询归档 "
-									+ orderReport.archiveCount + " 个，处理完毕 "
-									+ orderReport.overCount + " 个</p>");
+									+ orderReport.processCount + " 个<a href='javascript:void()' onclick='loadDetails(2)'>详细</a>，已延时  "
+									+ orderReport.delayCount + " 个<a href='javascript:void()' onclick='loadDetails(3)'>详细</a>，咨询归档 "
+									+ orderReport.archiveCount + " 个<a href='javascript:void()' onclick='loadDetails(4)'>详细</a>，处理完毕 "
+									+ orderReport.overCount + " 个<a href='javascript:void()' onclick='loadDetails(5)'>详细</a></p>");
 							info.append("<p>服务态度： 满意 "
-									+ orderReport.statisfyCount + " 个，不满意 "
-									+ orderReport.noStatisfyCount + " 个</p>");
+									+ orderReport.statisfyCount + " 个<a href='javascript:void()' onclick='loadDetails(6)'>详细</a>，不满意 "
+									+ orderReport.noStatisfyCount + " 个<a href='javascript:void()' onclick='loadDetails(7)'>详细</a></p>");
 							info.append("<p>服务质量：问题解决 " + orderReport.okCount
-									+ " 个，问题有遗留 " + orderReport.noOkCount
-									+ " 个，</p><hr>");
-	
+									+ " 个<a href='javascript:void()' onclick='loadDetails(8)'>详细</a>，问题有遗留 " + orderReport.noOkCount
+									+ " 个<a href='javascript:void()' onclick='loadDetails(9)'>详细</a></p><hr>");
+
 							var data1 = [ {
 								name : '待处理',
 								y : orderReport.processCount
@@ -207,8 +269,7 @@ $(function() {
 											});
 
 						}
-					});
-		});
+					});	
 
 	}
 
@@ -222,18 +283,33 @@ $(function() {
 		document.body.innerHTML = oldstr;
 		return;
 	}
+	
+	function loadDetails(type){
+		$.ajax({
+			url : "mainTainReportWorkerDetails.action",
+			data : {
+				workerName:$("#workerName").val(),
+				beginDate:$("#beginDate").val(),
+				endDate:$("#endDate").val(),
+				type:type
+			},
+			success:function(dataMap){
+				$('#details').bootstrapTable("load",dataMap.details);
+			}
+		});
+	}
 </script>
 
 <div style="padding-left: 5px;margin:20px auto; width: 1000px;">
 		<form id="condition">
 			<table>
 				<tr>
-					<td width="80px" style="text-align: right;">维修人员：</td>
+					<td width="80px" style="text-align: right;">维修员工：</td>
 					<td width="60px"><input type="text" id="workerName" name="workerName"></td>
-					<td width="100px" style="text-align: right;">日期起始：</td>
+					<td width="100px" style="text-align: right;">起始时间：</td>
 					<td width="60px"><input type="text" class="span9" id="beginDate"
 						name="beginDate"></td>
-					<td width="80px" style="text-align: right;">截止：</td>
+					<td width="80px" style="text-align: right;">截止时间：</td>
 					<td width="60px"><input type="text" class="span9" id="endDate"
 						name="endDate"></td>
 					<td width="80px" style="text-align: center;"><button type="button" class="btn btn-default"
@@ -247,7 +323,7 @@ $(function() {
 	
 	<div id="print_div" style="margin: 0 auto; width: 1000px; border: 1px solid">
 		<div
-			style="margin: 0 auto; width: 1000px; font-size: 32px; text-align: center;">维修统计报表</div>
+			style="margin: 0 auto; width: 1000px; font-size: 32px; text-align: center;">维修统计报表（维修员工）</div>
 		<div id="condinfo"
 			style="margin: 0 auto; width: 1000px; text-align: center; font-size: 14px;"></div>
 		<div id="info"
@@ -258,3 +334,6 @@ $(function() {
 			<div id="report3" style="width: 500px; "></div>
 		</div>
 	</div>
+	<div style="width:100%;">
+	<table id="details"  class="table"></table>
+		</div>

@@ -112,11 +112,13 @@ select u.account,u.name, from yihe_meta_user u left join yihe_map_user_function 
 where fid=22 
 
 select * from location
-INSERT INTO `location`(locationdate,locationtime,longitude,latitude,account) 
-VALUES ('2016-10-15','11:43:40',114.21,36.06,'赵洋'),
-('2016-10-15','11:43:40',114.221,36.061,'赵洋'),
-('2016-10-15','11:44:00',114.212,36.062,'赵洋'),
-('2016-10-15','11:45:20',114.213,36.063,'赵洋');
+INSERT INTO `location`(locationtime,longitude,latitude,account) 
+VALUES ('2016-10-15 11:43:40',114.21,36.06,'t2'),
+('2016-10-15 11:43:40',114.221,36.061,'t2'),
+('2016-10-15 11:44:00',114.212,36.062,'t2'),
+('2016-10-15 11:45:20',114.213,36.063,'t2');
+
+drop table location
 
 select * from location
 
