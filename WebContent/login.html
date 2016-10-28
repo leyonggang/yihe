@@ -39,6 +39,27 @@
             background: url(images/bg.jpg) no-repeat;
             background-size: cover;
         }
+        #login-box{
+            position: static;
+        }
+        .cen{
+            margin-top: 30px;
+        }
+        .cen span{
+            font-size: 20px;
+            margin-right: 20px;
+        }
+        .cen img{
+            width: 200px;
+        }
+        .foot {
+            border-top: 1px solid #666;
+            margin-top: 100px;
+        }
+        .foot span{
+            font-size: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -54,7 +75,6 @@
 								  <span class="red">益和热力</span>
 									<span class="white" id="id-text2">综合信息平台</span>
 								</h1>
-                            <h4 class="blue" id="id-company-text">&copy; 益和热力</h4>
                         </div>
 
                         <div class="space-6"></div>
@@ -102,9 +122,9 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group center">
 
-                                                <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                                                <button type="submit" class="width-35  btn btn-sm btn-primary">
                                                     <i class="ace-icon fa fa-key"></i>
                                                     <span class="bigger-110">登录</span>
                                                 </button>
@@ -123,11 +143,18 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
+            <div class="container center cen">
+                <span>扫二维码下载手机端</span>
+                <img src="images/1477623559.png" alt="下载APK">
+            </div>
+            <div class="footer center foot">
+            <span>建议使用谷歌内核浏览器打开网页</span>
+             <h4 id="id-company-text">&copy; 益和热力</h4>
+            </div>
         </div>
         <!-- /.main-content -->
     </div>
     <!-- /.main-container -->
-
     <!-- basic scripts -->
 
     <!--[if !IE]> -->
@@ -164,12 +191,14 @@
             });
             $("#login").submit(function () {
                 if ($('#login').data('bootstrapValidator').isValid()) {
-                    $.post("dataGrid!login.action", {stra:$("input[name='l-username']").val(),
-                    	strb:$("input[name='l-password']").val()}, function (data) {
+                    $.post("dataGrid!login.action", {
+                        stra: $("input[name='l-username']").val(),
+                        strb: $("input[name='l-password']").val()
+                    }, function (data) {
 
-                        if(data.mes==="suc"){
-                            window.location="index.html";
-                        }else{
+                        if (data.mes === "suc") {
+                            window.location = "index.html";
+                        } else {
                             $("#errMsg").html(data.mes);
                         }
                     }, "json")
