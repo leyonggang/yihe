@@ -284,13 +284,15 @@
         }
         /*将数据放到编辑表单里*/
         function getValue(row) {
+            $("#editFuns option").attr("selected", false);
             $("input[name='account']").val(row.account);
             $("input[name='password']").val(row.password);
             $("input[name='name']").val(row.name);
             $("select[name='dept']").val(row.did);
             $("input[name='phone']").val(row.phone);
-            for (var i = 0; i < row.funIds.length; i++) {
-                $("#editFuns option[value='" + row.funIds[i] + "']").attr("selected", true);
+            var funids=lyg.stringToList(row.funIds);
+            for (var i = 0; i < funids.length; i++) {
+                $("#editFuns option[value='" + funids[i] + "']").attr("selected", true);
             }
             $("#editFuns").trigger("chosen:updated");
         }
