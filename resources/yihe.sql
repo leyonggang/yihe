@@ -47,7 +47,8 @@ insert into yihe_meta_function(fid,name,pfid,type) values(3,'自动抄表信息'
 insert into yihe_meta_function(fid,name,pfid,type) values(4,'系统管理',null,1);
 insert into yihe_meta_function(fid,name,pfid,type) values(11,'用户基本情况',1,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(12,'管网监测数据',1,2);
-insert into yihe_meta_function(fid,name,pfid,type) values(13,'开关栓与稽查',1,2);
+insert into yihe_meta_function(fid,name,pfid,type) values(13,'开关栓',1,2);
+insert into yihe_meta_function(fid,name,pfid,type) values(14,'稽查',1,2);
 
 insert into yihe_meta_function(fid,name,pfid,type) values(22,'维修定位',2,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(23,'巡线轨迹',2,2);

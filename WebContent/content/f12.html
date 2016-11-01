@@ -19,7 +19,7 @@
                             <option value="安漳区">安漳区</option>
                             <option value="灯塔路">灯塔路</option>
                             <option value="洹北区">洹北区</option>
-                            <option selected value="开发区">开发区</option>
+                            <option value="开发区">开发区</option>
                             <option value="平原区">平原区</option>
                             <option value="三角湖">三角湖</option>
                             <option value="铁西北">铁西北</option>
@@ -62,16 +62,21 @@
         $("#dept").on("change",function(){
             $('#table').bootstrapTable("refresh",{query: {stra:$(this).val()}});
         });
+        var gwname=user.obja.dept.gwname;
+        if (gwname=='管理部门')gwname='安东北';
+        $("#dept").val(gwname);
+        if(user.obja.dept.type==1){$("#dept").attr("disabled","disabled");}
         $('#table').bootstrapTable({
             method: "get",
             url: "outPrint!f12Datagrid.action",
             queryParams: {
-                stra: "开发区"
+                stra: gwname
             },
             dataType: "json",
             search: true,
             toolbar: "#toolbar",
             pagination: true
+    	});
+        
     });
-    })
 </script>
