@@ -1,0 +1,106 @@
+<div class="breadcrumbs">
+	<ul class="breadcrumb">
+		<li><i class="glyphicon glyphicon-search"></i> 考勤记录</li>
+	</ul>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$('#beginTime').datepicker({
+			format : 'yyyy-mm-dd',
+			weekStart : 1,
+			autoclose : true,
+			todayBtn : 'linked',
+			language : 'zh-CN'
+		});
+		var date = new Date();
+		$('#beginTime').datepicker('setDate',
+				new Date(date.getTime() - 30 * 1000 * 60 * 60 * 24));
+
+		$('#endTime').datepicker({
+			format : 'yyyy-mm-dd',
+			weekStart : 1,
+			autoclose : true,
+			todayBtn : 'linked',
+			language : 'zh-CN'
+		});
+		var date = new Date();
+		$('#endTime').datepicker('setDate', date);
+		
+		
+		$.ajax({
+			url : "attendanceFind.action",
+			data : $('#condition').serialize(),
+			success : function(dataMap) {				
+				var options = {
+						method : "get",
+						dataType : "json",
+						//data : dataMap.ls,
+						columns : [ {
+							checkbox : true
+						}, {
+							field : "name",
+							title : "员工姓名",
+							width:200
+						} , {
+							field : "attendTime",
+							title : "时间",
+							width:200
+						}, {
+							field : "type",
+							title : "类型",
+							width:200
+						} ],
+					toolbar : "#toolbar",
+					pagination : true,
+					pageSize:50
+				};		
+		           
+					$("#attendance").bootstrapTable(options);
+			}
+		
+		});
+	});
+
+	function findAttendance() {
+		$.ajax({
+			url : "attendanceFind.action",
+			data : $('#condition').serialize(),
+			success : function(dataMap) {
+				if (dataMap.msg != "1") {
+					$.messager.alert("提示",dataMap.msg);
+					return;
+				}			
+				for(var i=0;i++;i<dataMap.ls.lentgh){
+					alert(dataMap.ls[i].name);
+				}
+	            $('#attendance').bootstrapTable("load",dataMap.ls);
+	        }
+		});
+	}
+</script>
+
+<div id="toolbar" style="padding-left: 5px;">
+	<form id="condition">
+		<table>
+			<tr>
+				<td width="100px" style="text-align: right;">员工姓名：</td>
+				<td width="60px"><input type="text" id="name"
+					name="name"></td>
+				<td width="100px" style="text-align: right;">起始日期：</td>
+				<td width="60px"><input type="text" class="span9"
+					id="beginTime" name="beginTime"></td>
+				<td width="80px" style="text-align: right;">截止日期：</td>
+				<td width="60px"><input type="text" class="span9" id="endTime"
+					name="endTime"></td>
+				<td width="80px" style="text-align: center;"><button
+						type="button" class="btn btn-default" onclick="findAttendance();">查 询
+						</button></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div style="position: absolute;top: 40px">
+<table id="attendance" class="table">		
+</table>
+</div>
+

@@ -74,6 +74,47 @@ public class MainTainDao extends HibernateDao {
 				mainTain.setM_backtime( rs.getString("M_backtime"));
 				mainTain.setM_backManner(rs.getString("M_backManner"));
 				mainTain.setM_backQuality(rs.getString("M_backQuality"));
+				
+				if(mainTain.getM_code()==null){
+					mainTain.setM_code("");
+				}
+				if(mainTain.getM_HANDTYPE()==null){
+					mainTain.setM_HANDTYPE("");
+				}
+				if(mainTain.getM_DEALOPERATOR()==null){
+					mainTain.setM_DEALOPERATOR("");
+				}
+				if(mainTain.getM_DISPATCHTIME()==null){
+					mainTain.setM_DISPATCHTIME("");
+				}
+				if(mainTain.getM_DEALTIME()==null){
+					mainTain.setM_DEALTIME("");
+				}
+				if(mainTain.getM_ADDRESS()==null){
+					mainTain.setM_ADDRESS("");
+				}
+				if(mainTain.getM_LINKMAN()==null){
+					mainTain.setM_LINKMAN("");
+				}
+				if(mainTain.getM_DISPATCHCONTENT()==null){
+					mainTain.setM_DISPATCHCONTENT("");
+				}
+				if(mainTain.getM_DEALCONTENT()==null){
+					mainTain.setM_DEALCONTENT("");
+				}
+				if(mainTain.getM_DEALRESULT()==null){
+					mainTain.setM_DEALRESULT("");
+				}
+				if(mainTain.getM_backtime()==null){
+					mainTain.setM_backtime("");
+				}
+				if(mainTain.getM_backManner()==null){
+					mainTain.setM_backManner("");
+				}
+				
+				if(mainTain.getM_backQuality()==null){
+					mainTain.setM_backQuality("");
+				}
 
 				return mainTain;
 			}

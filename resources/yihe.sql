@@ -55,6 +55,7 @@ insert into yihe_meta_function(fid,name,pfid,type) values(23,'巡线轨迹',2,2)
 insert into yihe_meta_function(fid,name,pfid,type) values(24,'维修信息',2,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(25,'维修报表(小区)',2,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(26,'维修报表(人员)',2,2);
+insert into yihe_meta_function(fid,name,pfid,type) values(27,'考勤记录',2,2);
 
 insert into yihe_meta_function(fid,name,pfid,type) values(31,'日报表',3,2);
 insert into yihe_meta_function(fid,name,pfid,type) values(32,'月报表',3,2);
