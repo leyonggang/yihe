@@ -14,20 +14,59 @@
                         <div class="input-group">
                             <label>片区：</label>
                             <select id="dept">
-                            <option value="安东北">安东北</option>
-                            <option value="安东南">安东南</option>
-                            <option value="安漳区">安漳区</option>
-                            <option value="灯塔路">灯塔路</option>
-                            <option value="洹北区">洹北区</option>
-                            <option value="开发区">开发区</option>
-                            <option value="平原区">平原区</option>
-                            <option value="三角湖">三角湖</option>
-                            <option value="铁西北">铁西北</option>
-                            <option value="铁西南">铁西南</option>
+                                <option value="安东北">安东北</option>
+                                <option value="安东南">安东南</option>
+                                <option value="安漳区">安漳区</option>
+                                <option value="灯塔路">灯塔路</option>
+                                <option value="洹北区">洹北区</option>
+                                <option value="开发区">开发区</option>
+                                <option value="平原区">平原区</option>
+                                <option value="三角湖">三角湖</option>
+                                <option value="铁西北">铁西北</option>
+                                <option value="铁西南">铁西南</option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <table id="tangOne" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th data-field="dt1t1">大唐出口1供温</th>
+                            <th data-field="dt1t2">大唐出口1回温</th>
+                            <th data-field="dt1p1">大唐出口1供压</th>
+                            <th data-field="dt1p2">大唐出口1回压</th>
+                            <th data-field="dt1flow1">大唐出口1供水流量</th>
+                            <th data-field="dt1flow2">大唐出口1回水流量</th>
+                            <th data-field="dt1flow3">大唐出口1补水流量1</th>
+                            <th data-field="dt1flow4">大唐出口1补水流量2</th>
+                            <th data-field="dt1mw">大唐出口1瞬间热量</th>
+                            <th data-field="dt1auuc1">大唐出口1累计流量</th>
+                            <th data-field="dt1auuc2">大唐出口1回水累计</th>
+                            <th data-field="dt1gj">大唐出口1累计热量</th>
+                            <th data-field="dt1auuc3">大唐出口1补水累计1</th>
+                            <th data-field="dt1auuc4">大唐出口1补水累计2</th>
+                        </tr>
+                    </thead>
+                </table>
+                <table id="tangTwo" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th data-field="dt3t1">大唐出口2供温</th>
+                            <th data-field="dt3t2">大唐出口2回温</th>
+                            <th data-field="dt3p1">大唐出口2供压</th>
+                            <th data-field="dt3p2">大唐出口2回压</th>
+                            <th data-field="dt3flow1">大唐出口2供水流量</th>
+                            <th data-field="dt3flow2">大唐出口2回水流量</th>
+                            <th data-field="dt3flow3">大唐出口2补水流量1</th>
+                            <th data-field="dt3mw">大唐出口2瞬间热量</th>
+                            <th data-field="dt3auuc1">大唐出口2累计流量</th>
+                            <th data-field="dt3auuc2">大唐出口2回水累计</th>
+                            <th data-field="dt3gj">大唐出口2累计热量</th>
+                            <th data-field="dt3auuc3">大唐出口2补水累计1</th>
+                        </tr>
+                    </thead>
+                </table>
+
                 <table id="table" class="table-responsive">
                     <thead>
                         <tr>
@@ -53,19 +92,26 @@
                         </tr>
                     </thead>
                 </table>
+
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
     $(function () {
-        $("#dept").on("change",function(){
-            $('#table').bootstrapTable("refresh",{query: {stra:$(this).val()}});
+        $("#dept").on("change", function () {
+            $('#table').bootstrapTable("refresh", {
+                query: {
+                    stra: $(this).val()
+                }
+            });
         });
-        var gwname=user.obja.dept.gwname;
-        if (gwname=='管理部门')gwname='安东北';
+        var gwname = user.obja.dept.gwname;
+        if (gwname == '管理部门') gwname = '安东北';
         $("#dept").val(gwname);
-        if(user.obja.dept.type==1){$("#dept").attr("disabled","disabled");}
+        if (user.obja.dept.type == 1) {
+            $("#dept").attr("disabled", "disabled");
+        }
         $('#table').bootstrapTable({
             method: "get",
             url: "outPrint!f12Datagrid.action",
@@ -76,7 +122,16 @@
             search: true,
             toolbar: "#toolbar",
             pagination: true
-    	});
-        
+        });
+        $('#tangOne').bootstrapTable({
+            method: "get",
+            url: "data.json",
+            dataType: "json"
+        });
+        $('#tangTwo').bootstrapTable({
+            method: "get",
+            url: "data.json",
+            dataType: "json"
+        });
     });
 </script>
