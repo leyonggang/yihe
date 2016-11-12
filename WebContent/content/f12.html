@@ -103,9 +103,10 @@
                     dataType: "json",
                     search: true,
                     toolbar: "#toolbar",
-                    pagination: true
+                    pagination: true,
+                    showRefresh: true
                 });
-        $.get("data.json", function (data) {
+        $.get("outPrint!f12Datagridb.action", function (data) {
             var strData = JSON.stringify(data.data),
             regex=/("dt3\w+":\d+(\.\d+)?,?)/g,
             newStr=",{",

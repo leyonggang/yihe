@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label>&nbsp;&nbsp;小区名称：</label>
-                            <select id="name">
+                            <select id="name" style="width:150px;">
                             </select>
                         </div>
                         <div class="form-group">
@@ -74,7 +74,7 @@
             var year = $("#year").val();
             var ownername = $("#ownername").val();
             var compqtype = $("#dept").val();
-            var communityname = $("#communityname").val();
+            var communityname = $("#name").val();
             var op = {
                 year: year,
                 compqtype: compqtype,
@@ -101,7 +101,6 @@
             toolbar: "#toolbar",
             pagination: true,
             detailView: true,
-            showRefresh: true,
             onExpandRow: function (index, row, $detail) {
                 if (row["SY_BH"] == null) {
                     $detail.append("无热表数据");
@@ -136,7 +135,7 @@
             $("#dept").val(user.obja.dept.name);
         }, "json");
         //刚载入时获取一次小区名称
-        $.get("f11data.json", function (data) {
+        $.get("outPrint!f11PqComboBox.action",{stra:$("#dept").val()}, function (data) {
                 var $options;
                 for (var i = 0; i < data.length; i++) {
                     $options = $("<option value='" + data[i].COMMUNITYNAME + "'>" + data[i].COMMUNITYNAME + "</option>")
@@ -145,8 +144,9 @@
             }, "json");
         //片区改变时获取小区名称
         $("#dept").on("change", function () {
-            $.get("f11data.json", function (data) {
+            $.get("outPrint!f11PqComboBox.action",{stra:$("#dept").val()}, function (data) {
                 var $options;
+                $("#name").empty();
                 for (var i = 0; i < data.length; i++) {
                     $options = $("<option value='" + data[i].COMMUNITYNAME + "'>" + data[i].COMMUNITYNAME + "</option>")
                     $("#name").append($options);
