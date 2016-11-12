@@ -14,16 +14,16 @@
                         <div class="form-group">
                             <label>年份：</label>
                             <select name="year" id="year">
-                             <option value="2016">2016</option>
-                             <option value="2015">2015</option>
-                             <option value="2014">2014</option>
-                             <option value="2013">2013</option>
-                             <option value="2012">2012</option>
-                             <option value="2011">2011</option>
-                             <option value="2010">2010</option>
-                             <option value="2009">2009</option>
-                             <option value="2008">2008</option>
- 							</select>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
@@ -34,7 +34,8 @@
                         </div>
                         <div class="form-group">
                             <label>&nbsp;&nbsp;小区名称：</label>
-                            <input id="communityname" type="text" class="form-control" placeholder="小区名称">
+                            <select id="name">
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>&nbsp;&nbsp;姓名：</label>
@@ -73,12 +74,12 @@
             var year = $("#year").val();
             var ownername = $("#ownername").val();
             var compqtype = $("#dept").val();
-            var communityname=$("#communityname").val();
+            var communityname = $("#communityname").val();
             var op = {
                 year: year,
                 compqtype: compqtype,
                 ownername: ownername,
-                communityname : communityname
+                communityname: communityname
             };
             $('#table').bootstrapTable("refresh", {
                 query: {
@@ -99,23 +100,33 @@
             search: true,
             toolbar: "#toolbar",
             pagination: true,
-            detailView:true,
-            onExpandRow:function(index, row, $detail){
-            	if(row["SY_BH"]==null) {$detail.append("无热表数据");return false;}
-            	$.get("dataGrid!f11DataRb.action",{stra:row["SY_BH"]},function(data){
-            		if(data.obja==null){$detail.append("厂商未提供热表数据");return false;}
-            		$detail.append("抄表时间："+data.obja.COMMANDTIME+"<br>")
-            		.append("流量："+data.obja.FLOW+"&emsp;&emsp;&emsp;")
-            		.append("总流量："+data.obja.TOTALFLOW+"&emsp;&emsp;&emsp;")
-            		.append("总热量："+data.obja.TOTALHEAT+"<br>")
-            		.append("入口温度："+data.obja.FEADWATERTEMPERATURE+"&emsp;&emsp;&emsp;")
-            		.append("回温："+data.obja.RETURNWATERTEMPERATURE+"&emsp;&emsp;&emsp;")
-            		.append("警告信息："+data.obja.WARNING+"<br>");
-            	},"json");
+            detailView: true,
+            showRefresh: true,
+            onExpandRow: function (index, row, $detail) {
+                if (row["SY_BH"] == null) {
+                    $detail.append("无热表数据");
+                    return false;
+                }
+                $.get("dataGrid!f11DataRb.action", {
+                    stra: row["SY_BH"]
+                }, function (data) {
+                    if (data.obja == null) {
+                        $detail.append("厂商未提供热表数据");
+                        return false;
+                    }
+                    $detail.append("抄表时间：" + data.obja.COMMANDTIME + "<br>")
+                        .append("流量：" + data.obja.FLOW + "&emsp;&emsp;&emsp;")
+                        .append("总流量：" + data.obja.TOTALFLOW + "&emsp;&emsp;&emsp;")
+                        .append("总热量：" + data.obja.TOTALHEAT + "<br>")
+                        .append("入口温度：" + data.obja.FEADWATERTEMPERATURE + "&emsp;&emsp;&emsp;")
+                        .append("回温：" + data.obja.RETURNWATERTEMPERATURE + "&emsp;&emsp;&emsp;")
+                        .append("警告信息：" + data.obja.WARNING + "<br>");
+                }, "json");
             }
         });
         $("#year").val("2016");
         var $table = $('#table');
+        //获取片区数据
         $.get("dataGrid!getComboBoxDepts.action", function (data) {
             var $options;
             for (var i = 0; i < data.lista.length; i++) {
@@ -123,9 +134,27 @@
                 $("#dept").append($options);
             }
             $("#dept").val(user.obja.dept.name);
-            
         }, "json");
-        
-        if(user.obja.dept.type==1){$("#dept").attr("disabled","disabled");}
+        //刚载入时获取一次小区名称
+        $.get("f11data.json", function (data) {
+                var $options;
+                for (var i = 0; i < data.length; i++) {
+                    $options = $("<option value='" + data[i].COMMUNITYNAME + "'>" + data[i].COMMUNITYNAME + "</option>")
+                    $("#name").append($options);
+                }
+            }, "json");
+        //片区改变时获取小区名称
+        $("#dept").on("change", function () {
+            $.get("f11data.json", function (data) {
+                var $options;
+                for (var i = 0; i < data.length; i++) {
+                    $options = $("<option value='" + data[i].COMMUNITYNAME + "'>" + data[i].COMMUNITYNAME + "</option>")
+                    $("#name").append($options);
+                }
+            }, "json");
+        });
+        if (user.obja.dept.type == 1) {
+            $("#dept").attr("disabled", "disabled");
+        }
     });
 </script>

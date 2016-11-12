@@ -31,38 +31,20 @@
                 <table id="tangOne" class="table-responsive">
                     <thead>
                         <tr>
-                            <th data-field="dt1t1">大唐出口1供温</th>
-                            <th data-field="dt1t2">大唐出口1回温</th>
-                            <th data-field="dt1p1">大唐出口1供压</th>
-                            <th data-field="dt1p2">大唐出口1回压</th>
-                            <th data-field="dt1flow1">大唐出口1供水流量</th>
-                            <th data-field="dt1flow2">大唐出口1回水流量</th>
-                            <th data-field="dt1flow3">大唐出口1补水流量1</th>
-                            <th data-field="dt1flow4">大唐出口1补水流量2</th>
-                            <th data-field="dt1mw">大唐出口1瞬间热量</th>
-                            <th data-field="dt1auuc1">大唐出口1累计流量</th>
-                            <th data-field="dt1auuc2">大唐出口1回水累计</th>
-                            <th data-field="dt1gj">大唐出口1累计热量</th>
-                            <th data-field="dt1auuc3">大唐出口1补水累计1</th>
-                            <th data-field="dt1auuc4">大唐出口1补水累计2</th>
-                        </tr>
-                    </thead>
-                </table>
-                <table id="tangTwo" class="table-responsive">
-                    <thead>
-                        <tr>
-                            <th data-field="dt3t1">大唐出口2供温</th>
-                            <th data-field="dt3t2">大唐出口2回温</th>
-                            <th data-field="dt3p1">大唐出口2供压</th>
-                            <th data-field="dt3p2">大唐出口2回压</th>
-                            <th data-field="dt3flow1">大唐出口2供水流量</th>
-                            <th data-field="dt3flow2">大唐出口2回水流量</th>
-                            <th data-field="dt3flow3">大唐出口2补水流量1</th>
-                            <th data-field="dt3mw">大唐出口2瞬间热量</th>
-                            <th data-field="dt3auuc1">大唐出口2累计流量</th>
-                            <th data-field="dt3auuc2">大唐出口2回水累计</th>
-                            <th data-field="dt3gj">大唐出口2累计热量</th>
-                            <th data-field="dt3auuc3">大唐出口2补水累计1</th>
+                            <th data-field="dt1t1">大唐出口供温</th>
+                            <th data-field="dt1t2">大唐出口回温</th>
+                            <th data-field="dt1p1">大唐出口供压</th>
+                            <th data-field="dt1p2">大唐出口回压</th>
+                            <th data-field="dt1flow1">大唐出口供水流量</th>
+                            <th data-field="dt1flow2">大唐出口回水流量</th>
+                            <th data-field="dt1flow3">大唐出口补水流量1</th>
+                            <th data-field="dt1flow4">大唐出口补水流量2</th>
+                            <th data-field="dt1mw">大唐出口瞬间热量</th>
+                            <th data-field="dt1auuc1">大唐出口累计流量</th>
+                            <th data-field="dt1auuc2">大唐出口回水累计</th>
+                            <th data-field="dt1gj">大唐出口累计热量</th>
+                            <th data-field="dt1auuc3">大唐出口补水累计1</th>
+                            <th data-field="dt1auuc4">大唐出口补水累计2</th>
                         </tr>
                     </thead>
                 </table>
@@ -106,35 +88,35 @@
                 }
             });
         });
-        //        var gwname = user.obja.dept.gwname;
-        //        if (gwname == '管理部门') gwname = '安东北';
-        //        $("#dept").val(gwname);
-        //        if (user.obja.dept.type == 1) {
-        //            $("#dept").attr("disabled", "disabled");
-        //        }
-        //        $('#table').bootstrapTable({
-        //            method: "get",
-        //            url: "outPrint!f12Datagrid.action",
-        //            queryParams: {
-        //                stra: gwname
-        //            },
-        //            dataType: "json",
-        //            search: true,
-        //            toolbar: "#toolbar",
-        //            pagination: true
-        //        });
+                var gwname = user.obja.dept.gwname;
+                if (gwname == '管理部门') gwname = '安东北';
+                $("#dept").val(gwname);
+                if (user.obja.dept.type == 1) {
+                    $("#dept").attr("disabled", "disabled");
+                }
+                $('#table').bootstrapTable({
+                    method: "get",
+                    url: "outPrint!f12Datagrid.action",
+                    queryParams: {
+                        stra: gwname
+                    },
+                    dataType: "json",
+                    search: true,
+                    toolbar: "#toolbar",
+                    pagination: true
+                });
         $.get("data.json", function (data) {
             var strData = JSON.stringify(data.data),
-            regex=/("dt3\w+":\d(\.\d+)?,?)/g,
-            newStr="{";
+            regex=/("dt3\w+":\d+(\.\d+)?,?)/g,
+            newStr=",{",
+            newData;
             while(regex.exec(strData)){
                 newStr+=RegExp.$1;
             }
             newStr+="}";
-            newStr.replace(/dt3/ig,"dt1");
-            console.log(newStr);
+            newData=JSON.parse("["+strData+newStr.replace(/dt3/ig,"dt1")+"]");
             $('#tangOne').bootstrapTable({
-                data: [data.data]
+                data: newData
             });
         }, "json");
     });
