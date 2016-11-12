@@ -106,32 +106,36 @@
                 }
             });
         });
-        var gwname = user.obja.dept.gwname;
-        if (gwname == '管理部门') gwname = '安东北';
-        $("#dept").val(gwname);
-        if (user.obja.dept.type == 1) {
-            $("#dept").attr("disabled", "disabled");
-        }
-        $('#table').bootstrapTable({
-            method: "get",
-            url: "outPrint!f12Datagrid.action",
-            queryParams: {
-                stra: gwname
-            },
-            dataType: "json",
-            search: true,
-            toolbar: "#toolbar",
-            pagination: true
-        });
-        $('#tangOne').bootstrapTable({
-            method: "get",
-            url: "data.json",
-            dataType: "json"
-        });
-        $('#tangTwo').bootstrapTable({
-            method: "get",
-            url: "data.json",
-            dataType: "json"
-        });
+        //        var gwname = user.obja.dept.gwname;
+        //        if (gwname == '管理部门') gwname = '安东北';
+        //        $("#dept").val(gwname);
+        //        if (user.obja.dept.type == 1) {
+        //            $("#dept").attr("disabled", "disabled");
+        //        }
+        //        $('#table').bootstrapTable({
+        //            method: "get",
+        //            url: "outPrint!f12Datagrid.action",
+        //            queryParams: {
+        //                stra: gwname
+        //            },
+        //            dataType: "json",
+        //            search: true,
+        //            toolbar: "#toolbar",
+        //            pagination: true
+        //        });
+        $.get("data.json", function (data) {
+            var strData = JSON.stringify(data.data),
+            regex=/("dt3\w+":\d(\.\d+)?,?)/g,
+            newStr="{";
+            while(regex.exec(strData)){
+                newStr+=RegExp.$1;
+            }
+            newStr+="}";
+            newStr.replace(/dt3/ig,"dt1");
+            console.log(newStr);
+            $('#tangOne').bootstrapTable({
+                data: [data.data]
+            });
+        }, "json");
     });
 </script>
