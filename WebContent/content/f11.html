@@ -34,33 +34,33 @@
                         </div>
                         <div class="form-group">
                             <label>&nbsp;&nbsp;小区名称：</label>
-                            <select id="name" style="width:150px;">
+                            <select multiple="multiple" class="js-example-basic-single" id="name" style="width:300px">
                             </select>
                         </div>
                         <div class="form-group">
                             <label>&nbsp;&nbsp;姓名：</label>
                             <input id="ownername" type="text" class="form-control" placeholder="姓名">
                         </div>
-                        <button id="search" type="button" class="btn btn-default">查询</button>
+                        <button id="search" type="button" class="btn btn-success">查询</button>
                     </form>
                 </div>
-                <table id="table">
+                <table class="table table-striped table-hover" id="table">
                     <thead>
                         <tr>
                             <th data-checkbox="true"></th>
-                            <th data-field="HOUSECODE">房间编号</th>
-                            <th data-field="COMPQTYPE">片区</th>
+                            <th data-align="center" data-field="HOUSECODE">房间编号</th>
+                            <th data-align="center" data-field="COMPQTYPE">片区</th>
                             <!-- <th data-field="COMMUNITYCODE">小区编号</th> -->
-                            <th data-field="COMMUNITYNAME">小区名称</th>
-                            <th data-field="BUILDINGNAME">楼栋</th>
-                            <th data-field="OWNERNAME">用户名称</th>
-                            <th data-field="CONTACTPHONE">电话</th>
-                            <th data-field="ADDRESS">地址</th>
-                            <th data-field="COMBUILDAREA">面积</th>
-                            <th data-field="SF_STATUS">交费情况</th>
-                            <th data-field="JC_STATUS">稽查信息</th>
-                            <th data-field="BOLTSTATUS">开关检状态</th>
-                            <th data-field="SY_BH">热表编号</th>
+                            <th data-align="center" data-field="COMMUNITYNAME">小区名称</th>
+                            <th data-align="center" data-field="BUILDINGNAME">楼栋</th>
+                            <th data-align="center" data-field="OWNERNAME">用户名称</th>
+                            <th data-align="center" data-field="CONTACTPHONE">电话</th>
+                            <th data-align="center" data-field="ADDRESS">地址</th>
+                            <th data-align="center" data-field="COMBUILDAREA">面积</th>
+                            <th data-align="center" data-field="SF_STATUS">交费情况</th>
+                            <th data-align="center" data-field="JC_STATUS">稽查信息</th>
+                            <th data-align="center" data-field="BOLTSTATUS">开关检状态</th>
+                            <th data-align="center" data-field="SY_BH">热表编号</th>
                         </tr>
                     </thead>
                 </table>
@@ -100,6 +100,7 @@
             search: true,
             toolbar: "#toolbar",
             pagination: true,
+            pageList:[10, 25, 50, 100],
             detailView: true,
             onExpandRow: function (index, row, $detail) {
                 if (row["SY_BH"] == null) {
@@ -135,16 +136,20 @@
             $("#dept").val(user.obja.dept.name);
         }, "json");
         //刚载入时获取一次小区名称
-        $.get("outPrint!f11PqComboBox.action",{stra:$("#dept").val()}, function (data) {
-                var $options;
-                for (var i = 0; i < data.length; i++) {
-                    $options = $("<option value='" + data[i].COMMUNITYNAME + "'>" + data[i].COMMUNITYNAME + "</option>")
-                    $("#name").append($options);
-                }
-            }, "json");
+        $.get("outPrint!f11PqComboBox.action", {
+            stra: $("#dept").val()
+        }, function (data) {
+            var $options;
+            for (var i = 0; i < data.length; i++) {
+                $options = $("<option value='" + data[i].COMMUNITYNAME + "'>" + data[i].COMMUNITYNAME + "</option>")
+                $("#name").append($options);
+            }
+        }, "json");
         //片区改变时获取小区名称
         $("#dept").on("change", function () {
-            $.get("outPrint!f11PqComboBox.action",{stra:$("#dept").val()}, function (data) {
+            $.get("outPrint!f11PqComboBox.action", {
+                stra: $("#dept").val()
+            }, function (data) {
                 var $options;
                 $("#name").empty();
                 for (var i = 0; i < data.length; i++) {
@@ -156,5 +161,8 @@
         if (user.obja.dept.type == 1) {
             $("#dept").attr("disabled", "disabled");
         }
+        $(".js-example-basic-single").select2({
+            maximumSelectionLength: 1
+        });
     });
 </script>
