@@ -34,7 +34,10 @@
                         </div>
                         <div class="form-group">
                             <label>&nbsp;&nbsp;小区名称：</label>
-                            <select multiple="multiple" class="js-example-basic-single" id="name" style="width:300px">
+                            <select class="js-example-basic-single" id="name" style="width:250px;">
+                                <option value="1">1</option>
+                                <option value="23">1</option>
+                                <option value="34">1</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -70,6 +73,10 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        $(".js-example-basic-single").select2();
+        $("#name").on("change",function(){
+            console.log($(this).val());
+        })
         $("#search").on("click", function () {
             var year = $("#year").val();
             var ownername = $("#ownername").val();
@@ -100,7 +107,7 @@
             search: true,
             toolbar: "#toolbar",
             pagination: true,
-            pageList:[10, 25, 50, 100],
+            pageList: [10, 25, 50, 100],
             detailView: true,
             onExpandRow: function (index, row, $detail) {
                 if (row["SY_BH"] == null) {
@@ -161,8 +168,5 @@
         if (user.obja.dept.type == 1) {
             $("#dept").attr("disabled", "disabled");
         }
-        $(".js-example-basic-single").select2({
-            maximumSelectionLength: 1
-        });
     });
 </script>
